@@ -4,73 +4,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Join Chantify.org to achieve 1 crore Gayatri Mantra chants as a collective offering for Sri Sathya Sai Baba's 100th birthday celebration.">
-    <title>Chantify.org | Gayatri Mantra Offering</title>
+    <meta name="description" content="Join us at Chantify.org to contribute to 1 crore Gayatri Mantra chants in honor of Sri Sathya Sai Baba's 100th birthday.">
+    <meta name="keywords" content="Gayatri Mantra, Chanting, Spirituality, Sri Sathya Sai Baba">
+    <meta name="author" content="Chantify.org">
+    <title>Chantify.org | 1 Crore Gayatri Mantra Chanting</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            margin: 20px;
+            color: #333;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .poster {
-            flex: 1;
-            min-width: 300px;
+            flex: 1 1 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
         .poster img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .content {
-            flex: 1;
-            min-width: 300px;
+            flex: 1 1 50%;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
-        h1 {
-            color: #333;
-            font-size: 24px;
+        .content h1 {
+            font-size: 2rem;
+            color: #0066cc;
             margin-bottom: 10px;
         }
 
-        p {
-            color: #555;
-            margin-bottom: 10px;
+        .content p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
         }
 
-        a {
-            color: #007BFF;
+        .content a {
+            color: #0066cc;
             text-decoration: none;
         }
 
-        a:hover {
+        .content a:hover {
             text-decoration: underline;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #777;
+        .cta a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .cta a:hover {
+            background-color: #004da8;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar div {
+            height: 20px;
+            width: 50%;
+            background-color: #4caf50;
+        }
+
+        .contact a {
+            display: block;
+            margin: 5px 0;
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .poster, .content {
+                flex: 1 1 100%;
+            }
         }
     </style>
 </head>
 
 <body>
+    <header>
+        <h1 style="text-align: center; margin: 20px 0;">Chantify.org | 1 Crore Gayatri Mantra Chanting</h1>
+    </header>
+
     <div class="container">
         <!-- Poster Section -->
         <div class="poster">
@@ -79,28 +131,42 @@
 
         <!-- Content Section -->
         <div class="content">
-            <h1>Join Chantify.org</h1>
-            <p>
-                Participate in a historic spiritual movement: 1 crore Gayatri Mantra chants as a collective offering for
-                Sri Sathya Sai Baba's 100th birthday celebration. Together, let's create an atmosphere of divine
-                vibrations and unity.
-            </p>
+            <h1>Welcome to Chantify.org</h1>
+            <p>Join our mission to chant 1 crore Gayatri Mantras as a heartfelt offering in honor of Sri Sathya Sai Baba's 100th birthday. Be part of this global spiritual movement and contribute to this divine goal.</p>
 
-            <h2>How to Get Involved:</h2>
-            <ul>
-                <li>Contact us at <a href="mailto:chantify.org@gmail.com">chantify.org@gmail.com</a></li>
-                <li>Visit our website: <a href="https://chantify.org">chantify.org</a></li>
-                <li>Join our WhatsApp channel: <a href="https://wa.me/chantify.org">chantify.org</a></li>
-            </ul>
+            <section>
+                <h2>How to Participate</h2>
+                <p>Follow these simple steps to join:</p>
+                <ol>
+                    <li><strong>Sign Up:</strong> Register using the <a href="https://forms.google.com">Google Form</a>.</li>
+                    <li><strong>Set Your Goal:</strong> Decide your daily chanting commitment.</li>
+                    <li><strong>Report Weekly:</strong> Update us via email or WhatsApp.</li>
+                </ol>
+                <div class="cta">
+                    <a href="https://forms.google.com">Click Here to Join the Chant</a>
+                </div>
+            </section>
 
-            <p>
-                Let’s chant together and make history. Every chant counts towards a collective goal that resonates with
-                love and devotion.
-            </p>
+            <section>
+                <h2>Progress Tracker</h2>
+                <p>Together, we have chanted:</p>
+                <div class="progress-bar">
+                    <div></div>
+                </div>
+                <p><strong>50%</strong> of the target completed!</p>
+            </section>
+
+            <section class="contact">
+                <h2>Contact Us</h2>
+                <p>For more information, reach out to us:</p>
+                <a href="mailto:chantify.org@gmail.com">Email: chantify.org@gmail.com</a>
+                <a href="https://chantify.org">Website: chantify.org</a>
+                <a href="https://whatsapp.com">Join WhatsApp Channel</a>
+            </section>
         </div>
     </div>
 
-    <footer>
+    <footer style="text-align: center; margin: 20px 0;">
         &copy; 2025 Chantify.org | All Rights Reserved
     </footer>
 </body>
