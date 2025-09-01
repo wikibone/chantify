@@ -1,174 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Join us at Chantify.org to contribute to 1 crore Gayatri Mantra chants in honor of Sri Sathya Sai Baba's 100th birthday.">
-    <meta name="keywords" content="Gayatri Mantra, Chanting, Spirituality, Sri Sathya Sai Baba">
-    <meta name="author" content="Chantify.org">
-    <title>Chantify.org | 1 Crore Gayatri Mantra Chanting</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chantify.org - Join us in chanting Gayatri Mantras for the 100th Birthday offering to Sri Sathya Sai Baba.">
+  <title>Chantify.org | Global Gayatri Mantra Chanting</title>
+  <style>
+    body {
+      font-family: "Verdana", sans-serif;
+      background-color: #fdfdfd;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    header {
+      background-color: #0066cc;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .section {
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    h2 {
+      color: #004da8;
+      margin-bottom: 15px;
+    }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+    /* Dashboard */
+    .dashboard {
+      max-width: 700px;
+      margin: auto;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      background: #f9f9f9;
+    }
+    .samithi {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background: #fff;
+      margin: 8px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .samithi strong {
+      color: #0066cc;
+    }
 
-        .poster {
-            flex: 1 1 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+    /* Gallery */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .gallery img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
 
-        .poster img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+    /* Contact */
+    .contact a {
+      display: block;
+      margin: 10px 0;
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+    }
 
-        .content {
-            flex: 1 1 50%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+      font-size: 0.9rem;
+    }
 
-        .content h1 {
-            font-size: 2rem;
-            color: #0066cc;
-            margin-bottom: 10px;
-        }
-
-        .content p {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .content a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .content a:hover {
-            text-decoration: underline;
-        }
-
-        .cta a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #0066cc;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .cta a:hover {
-            background-color: #004da8;
-        }
-
-        .progress-bar {
-            width: 100%;
-            background: #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .progress-bar div {
-            height: 20px;
-            width: 50%;
-            background-color: #4caf50;
-        }
-
-        .contact a {
-            display: block;
-            margin: 5px 0;
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .contact a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .poster, .content {
-                flex: 1 1 100%;
-            }
-        }
-    </style>
+    /* Elderly Friendly */
+    button, a {
+      font-size: 1rem;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
-
 <body>
-    <header>
-        <h1 style="text-align: center; margin: 20px 0;">Chantify.org | 1 Crore Gayatri Mantra Chanting</h1>
-    </header>
 
-    <div class="container">
-        <!-- Poster Section -->
-        <div class="poster">
-            <img src="Chantify Poster.jpg" alt="Chantify Poster">
-        </div>
+  <!-- Header -->
+  <header>
+    <h1>Chantify.org</h1>
+    <p>1 Crore Gayatri Mantra Chanting for Sri Sathya Sai Baba’s 100th Birthday</p>
+  </header>
 
-        <!-- Content Section -->
-        <div class="content">
-            <h1>Welcome to Chantify.org</h1>
-            <p>Join our mission to chant 1 crore Gayatri Mantras as a heartfelt offering in honor of Sri Sathya Sai Baba's 100th birthday. Be part of this global spiritual movement and contribute to this divine goal.</p>
-
-            <section>
-                <h2>How to Participate</h2>
-                <p>Follow these simple steps to join:</p>
-                <ol>
-                    <li><strong>Sign Up:</strong> Register using the <a href="https://forms.google.com">Google Form</a>.</li>
-                    <li><strong>Set Your Goal:</strong> Decide your daily chanting commitment.</li>
-                    <li><strong>Report Weekly:</strong> Update us via email or WhatsApp.</li>
-                </ol>
-                <div class="cta">
-                    <a href="https://chat.whatsapp.com/HmFKEHYjvyGIq2a6pZDsxm">Click Here to Join the Chant</a>
-                </div>
-            </section>
-
-            <section>
-                <h2>Progress Tracker</h2>
-                <p>Together, we have chanted:</p>
-                <div class="progress-bar">
-                    <div></div>
-                </div>
-                <p><strong>50%</strong> of the target completed!</p>
-            </section>
-
-            <section class="contact">
-                <h2>Contact Us</h2>
-                <p>For more information, reach out to us:</p>
-                <a href="mailto:chantify.org@gmail.com">Email: chantify.org@gmail.com</a>
-                <a href="https://chantify.org">Website: chantify.org</a>
-                <a href="https://chat.whatsapp.com/HmFKEHYjvyGIq2a6pZDsxm">Join WhatsApp Channel</a>
-            </section>
-        </div>
+  <!-- Dashboard -->
+  <div class="section">
+    <h2>🌸 Chanting Dashboard</h2>
+    <p>Tally of chants reported by Samithis worldwide:</p>
+    <div class="dashboard">
+      <div class="samithi">
+        <span><strong>Chennai Samithi</strong></span>
+        <span>2,50,000 chants</span>
+      </div>
+      <div class="samithi">
+        <span><strong>Bangalore Samithi</strong></span>
+        <span>3,10,000 chants</span>
+      </div>
+      <div class="samithi">
+        <span><strong>Mumbai Samithi</strong></span>
+        <span>1,85,000 chants</span>
+      </div>
+      <div class="samithi">
+        <span><strong>Hyderabad Samithi</strong></span>
+        <span>2,90,000 chants</span>
+      </div>
+      <h3 style="margin-top:20px;">🌼 Total: 10,35,000 chants so far!</h3>
     </div>
+  </div>
 
-    <footer style="text-align: center; margin: 20px 0;">
-        &copy; 2025 Chantify.org | All Rights Reserved
-    </footer>
+  <!-- Satsang Announcement -->
+  <div class="section">
+    <h2>🕉️ Monthly Online Satsang</h2>
+    <p>We lovingly invite you for a monthly 1-hour online satsang of chanting and bhajans.</p>
+    <p><strong>Next Session:</strong> Sunday, September 21st at 6:00 PM IST</p>
+    <p>Link will be shared via WhatsApp and Email shortly.</p>
+  </div>
+
+  <!-- Photo Gallery -->
+  <div class="section">
+    <h2>📸 Project Photos</h2>
+    <p>Moments from our ongoing journey of collective chanting:</p>
+    <div class="gallery">
+      <img src="photo1.jpg" alt="Chanting Session">
+      <img src="photo2.jpg" alt="Samithi Group">
+      <img src="photo3.jpg" alt="Online Satsang">
+      <img src="photo4.jpg" alt="Youth Participation">
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="section contact">
+    <h2>📞 Contact Us</h2>
+    <p>If you need help or wish to join, please connect:</p>
+    <a href="mailto:chantify.org@gmail.com">✉️ Email: chantify.org@gmail.com</a>
+    <a href="https://chantify.org">🌐 Website: chantify.org</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Chantify.org | All Rights Reserved
+  </footer>
+
 </body>
-
 </html>
