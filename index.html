@@ -7,7 +7,7 @@
   <title>Sai Gayatri Shata Laksha Arpan</title>
   <style>
     :root {
-      --primary-color: #d35400; /* saffron - devotional, elderly friendly */
+      --primary-color: #d35400; /* saffron */
       --secondary-color: #333;
       --background-color: #fdfdfd;
       --card-background: #fff;
@@ -36,8 +36,9 @@
     }
     header h2 {
       margin: 10px 0;
-      font-size: 1.2rem;
-      font-weight: normal;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #fff; /* always white, visible in both modes */
     }
     header p {
       font-size: 1rem;
@@ -64,7 +65,7 @@
       border-radius: 10px;
       padding: 15px;
       background: var(--card-background);
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, color 0.3s;
     }
     .samithi {
       display: flex;
@@ -110,7 +111,7 @@
       font-size: 0.9rem;
     }
 
-    /* Controls (top right) */
+    /* Control Panel (top right) */
     .controls {
       display: flex;
       justify-content: flex-end;
@@ -129,7 +130,7 @@
 
     /* Dark Mode */
     body.dark {
-      --primary-color: #f4a261;
+      --primary-color: #f39c12; /* lighter orange shade */
       --secondary-color: #f1f1f1;
       --background-color: #222;
       --card-background: #333;
@@ -137,7 +138,7 @@
       color: #f1f1f1;
     }
     body.dark header {
-      background: #8e44ad;
+      background: #8e44ad; /* purple */
     }
     body.dark footer {
       background: #444;
@@ -151,6 +152,9 @@
       }
       header h1 {
         font-size: 1.6rem;
+      }
+      header h2 {
+        font-size: 1.1rem;
       }
       h2 {
         font-size: 1.3rem;
