@@ -6,42 +6,54 @@
   <meta name="description" content="Sai Gayatri Shata Laksha Arpan - A devotional offering of One Crore Gayatri chants for Sri Sathya Sai Baba's Centenary year.">
   <title>Sai Gayatri Shata Laksha Arpan</title>
   <style>
+    :root {
+      --primary-color: #d35400; /* saffron - devotional, elderly friendly */
+      --secondary-color: #333;
+      --background-color: #fdfdfd;
+      --card-background: #fff;
+    }
+
     body {
       font-family: "Verdana", sans-serif;
-      background-color: #fdfdfd;
+      background-color: var(--background-color);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: var(--secondary-color);
       font-size: 18px;
       line-height: 1.8;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     header {
-      background-color: #6a1b9a;
+      background-color: var(--primary-color);
       color: white;
       text-align: center;
       padding: 30px 20px;
     }
     header h1 {
       margin: 0;
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
     header h2 {
-      margin: 10px 0 5px;
-      font-size: 1.3rem;
+      margin: 10px 0;
+      font-size: 1.2rem;
       font-weight: normal;
     }
     header p {
       font-size: 1rem;
       margin-top: 10px;
     }
+
     .section {
       padding: 30px 20px;
       text-align: center;
       border-bottom: 1px solid #ddd;
     }
+
     h2 {
-      color: #4a148c;
+      color: var(--primary-color);
       margin-bottom: 15px;
+      font-size: 1.5rem;
     }
 
     /* Dashboard */
@@ -51,19 +63,17 @@
       border: 2px solid #ccc;
       border-radius: 10px;
       padding: 15px;
-      background: #f9f9f9;
+      background: var(--card-background);
+      transition: background-color 0.3s;
     }
     .samithi {
       display: flex;
       justify-content: space-between;
       padding: 10px;
-      background: #fff;
+      background: var(--background-color);
       margin: 8px 0;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .samithi strong {
-      color: #6a1b9a;
     }
 
     /* Gallery */
@@ -74,9 +84,9 @@
       gap: 15px;
     }
     .gallery img {
-      width: 200px;
-      height: 150px;
-      object-fit: cover;
+      width: 100%;
+      max-width: 200px;
+      height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
@@ -85,7 +95,7 @@
     .contact a {
       display: block;
       margin: 10px 0;
-      color: #6a1b9a;
+      color: var(--primary-color);
       text-decoration: none;
       font-size: 1.1rem;
     }
@@ -100,30 +110,81 @@
       font-size: 0.9rem;
     }
 
-    /* Elderly Friendly */
-    button, a {
-      font-size: 1rem;
+    /* Controls (top right) */
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
       padding: 10px 20px;
+      background: #f0f0f0;
+      border-bottom: 1px solid #ddd;
+    }
+    select, button {
+      padding: 6px 12px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+      background: white;
+    }
+
+    /* Dark Mode */
+    body.dark {
+      --primary-color: #f4a261;
+      --secondary-color: #f1f1f1;
+      --background-color: #222;
+      --card-background: #333;
+      background-color: #222;
+      color: #f1f1f1;
+    }
+    body.dark header {
+      background: #8e44ad;
+    }
+    body.dark footer {
+      background: #444;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .samithi {
+        flex-direction: column;
+        text-align: left;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Controls -->
+  <div class="controls">
+    <select id="languageSwitcher">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिंदी</option>
+    </select>
+    <button onclick="toggleDarkMode()">🌗 Toggle Mode</button>
+  </div>
+
   <!-- Header -->
   <header>
-    <h1>🌸 Sai Gayatri Shata Laksha Arpan 🌸</h1>
-    <h2>Offering of One Crore Sai Gayatri Chants</h2>
-    <p>
+    <h1 id="title">🌸 Sai Gayatri Shata Laksha Arpan 🌸</h1>
+    <h2 id="tagline">Offering of One Crore Sai Gayatri Chants</h2>
+    <p id="description">
       A sacred devotional project lovingly dedicated at the divine lotus feet of  
       Bhagawan Sri Sathya Sai Baba on the auspicious occasion of His Centenary Birthday Celebrations.
     </p>
-    <p><em>May the collective chants bring peace, love and divine grace to all.</em></p>
+    <p id="blessing"><em>May the collective chants bring peace, love and divine grace to all.</em></p>
   </header>
 
   <!-- Dashboard -->
   <div class="section">
-    <h2>🌼 Chanting Dashboard</h2>
-    <p>Tally of chants reported by Samithis:</p>
+    <h2 id="dashboardTitle">🌼 Chanting Dashboard</h2>
+    <p id="dashboardText">Tally of chants reported by Samithis:</p>
     <div class="dashboard">
       <div class="samithi">
         <span><strong>Kothapeta Samithi</strong></span>
@@ -137,18 +198,18 @@
     </div>
   </div>
 
-  <!-- Satsang Announcement -->
+  <!-- Satsang -->
   <div class="section">
-    <h2>🕉️ Monthly Online Satsang</h2>
-    <p>We lovingly invite you for a monthly 1-hour online satsang of Sai Gayatri chanting and bhajans.</p>
-    <p><strong>Next Session:</strong> Sunday, September 21st at 6:00 PM IST</p>
-    <p>The meeting link will be shared via WhatsApp by your Samithi Convener.</p>
+    <h2 id="satsangTitle">🕉️ Monthly Online Satsang</h2>
+    <p id="satsangText">We lovingly invite you for a monthly 1-hour online satsang of Sai Gayatri chanting and bhajans.</p>
+    <p><strong id="nextSession">Next Session:</strong> Sunday, September 21st at 6:00 PM IST</p>
+    <p id="linkInfo">The meeting link will be shared via WhatsApp by your Samithi Convener.</p>
   </div>
 
   <!-- Photo Gallery -->
   <div class="section">
-    <h2>📸 Project Glimpses</h2>
-    <p>Memories and moments from our collective chanting offerings:</p>
+    <h2 id="galleryTitle">📸 Project Glimpses</h2>
+    <p id="galleryText">Memories and moments from our collective chanting offerings:</p>
     <div class="gallery">
       <img src="photo1.jpg" alt="Chanting Book">
       <img src="photo2.jpg" alt="Chanting Count">
@@ -157,8 +218,8 @@
 
   <!-- Contact -->
   <div class="section contact">
-    <h2>📞 Contact Us</h2>
-    <p>If you would like to contribute or know more:</p>
+    <h2 id="contactTitle">📞 Contact Us</h2>
+    <p id="contactText">If you would like to contribute or know more:</p>
     <a href="mailto:chantify.org@gmail.com">✉️ Email: chantify.org@gmail.com</a>
     <a href="https://chantify.org">🌐 Website: chantify.org</a>
   </div>
@@ -167,6 +228,73 @@
   <footer>
     &copy; 2025 Chantify.org | All Rights Reserved
   </footer>
+
+<script>
+  // Dark Mode Toggle
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+  }
+
+  // Language Translations
+  const translations = {
+    en: {
+      title: "🌸 Sai Gayatri Shata Laksha Arpan 🌸",
+      tagline: "Offering of One Crore Sai Gayatri Chants",
+      description: "A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of His Centenary Birthday Celebrations.",
+      blessing: "May the collective chants bring peace, love and divine grace to all.",
+      dashboardTitle: "🌼 Chanting Dashboard",
+      dashboardText: "Tally of chants reported by Samithis:",
+      satsangTitle: "🕉️ Monthly Online Satsang",
+      satsangText: "We lovingly invite you for a monthly 1-hour online satsang of Sai Gayatri chanting and bhajans.",
+      nextSession: "Next Session:",
+      linkInfo: "The meeting link will be shared via WhatsApp by your Samithi Convener.",
+      galleryTitle: "📸 Project Glimpses",
+      galleryText: "Memories and moments from our collective chanting offerings:",
+      contactTitle: "📞 Contact Us",
+      contactText: "If you would like to contribute or know more:"
+    },
+    te: {
+      title: "🌸 సాయి గాయత్రి శతలక్ష అర్పణ 🌸",
+      tagline: "ఒక కోటి సాయి గాయత్రి జపాల సమర్పణ",
+      description: "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంగా ఈ పవిత్రమైన గాయత్రి జప సమర్పణ.",
+      blessing: "సమూహ జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం తీసుకురావాలి.",
+      dashboardTitle: "🌼 జప గణాంకాలు",
+      dashboardText: "సమితుల వారు నివేదించిన గణాంకం:",
+      satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్",
+      satsangText: "ప్రతి నెలా ఒక గంటపాటు ఆన్‌లైన్ సత్సంగ్‌లో పాల్గొనవలసిందిగా ఆహ్వానం.",
+      nextSession: "తదుపరి సత్సంగ్:",
+      linkInfo: "మీ సమితి కన్వీనర్ ద్వారా లింక్ పంపబడుతుంది.",
+      galleryTitle: "📸 ప్రాజెక్ట్ చిత్రాలు",
+      galleryText: "సమూహ జప యాత్రలో కొన్ని క్షణాలు:",
+      contactTitle: "📞 సంప్రదించండి",
+      contactText: "మరింత తెలుసుకోవాలనుకుంటే:"
+    },
+    hi: {
+      title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸",
+      tagline: "एक करोड़ साई गायत्री जप का अर्पण",
+      description: "भगवान श्री सत्य साई बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर यह पावन गायत्री जप प्रकल्प अर्पित है।",
+      blessing: "सामूहिक जप से सभी को शांति, प्रेम और दिव्य कृपा प्राप्त हो।",
+      dashboardTitle: "🌼 जप प्रगति",
+      dashboardText: "समितियों द्वारा दी गई गणना:",
+      satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग",
+      satsangText: "हम आपको मासिक एक घंटे के ऑनलाइन सत्संग में भाग लेने के लिए आमंत्रित करते हैं।",
+      nextSession: "अगला सत्र:",
+      linkInfo: "लिंक आपके समिति संयोजक द्वारा साझा किया जाएगा।",
+      galleryTitle: "📸 प्रकल्प की झलकियां",
+      galleryText: "हमारी सामूहिक जप यात्रा के कुछ पल:",
+      contactTitle: "📞 संपर्क करें",
+      contactText: "यदि आप अधिक जानना चाहते हैं:"
+    }
+  };
+
+  document.getElementById("languageSwitcher").addEventListener("change", function() {
+    const lang = this.value;
+    const t = translations[lang];
+    for (let key in t) {
+      document.getElementById(key).innerHTML = t[key];
+    }
+  });
+</script>
 
 </body>
 </html>
