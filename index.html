@@ -38,7 +38,7 @@
       margin: 10px 0;
       font-size: 1.3rem;
       font-weight: bold;
-      color: #fff; /* always white, visible in both modes */
+      color: #fff; /* always white */
     }
     header p {
       font-size: 1rem;
@@ -57,6 +57,53 @@
       font-size: 1.5rem;
     }
 
+    /* Sai Gayatri Layout */
+    .mantra-section {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: auto;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: left;
+    }
+    .left-col, .right-col {
+      flex: 1 1 45%;
+      background: var(--card-background);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .sub-heading {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+    .lyrics {
+      font-size: 1.4rem;
+      text-align: center;
+      line-height: 2.2;
+      margin: 15px 0;
+    }
+    audio {
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: auto;
+    }
+    .music-sheet {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .music-sheet img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
     /* Dashboard */
     .dashboard {
       max-width: 700px;
@@ -65,7 +112,6 @@
       border-radius: 10px;
       padding: 15px;
       background: var(--card-background);
-      transition: background-color 0.3s, color 0.3s;
     }
     .samithi {
       display: flex;
@@ -111,7 +157,7 @@
       font-size: 0.9rem;
     }
 
-    /* Control Panel (top right) */
+    /* Control Panel */
     .controls {
       display: flex;
       justify-content: flex-end;
@@ -130,7 +176,7 @@
 
     /* Dark Mode */
     body.dark {
-      --primary-color: #f39c12; /* lighter orange shade */
+      --primary-color: #f39c12;
       --secondary-color: #f1f1f1;
       --background-color: #222;
       --card-background: #333;
@@ -146,9 +192,8 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .samithi {
+      .mantra-section {
         flex-direction: column;
-        text-align: left;
       }
       header h1 {
         font-size: 1.6rem;
@@ -184,6 +229,40 @@
     </p>
     <p id="blessing"><em>May the collective chants bring peace, love and divine grace to all.</em></p>
   </header>
+
+  <!-- Sai Gayatri Mantra Section -->
+  <div class="section">
+    <h2>🕉️ Sai Gayatri Mantra</h2>
+    <div class="mantra-section">
+      <!-- LEFT column -->
+      <div class="left-col">
+        <div class="sub-heading">📜 Lyrics</div>
+        <p class="lyrics">
+          ॐ सायेश्वराय विद्महे <br>
+          सत्यदेवाय धीमहि <br>
+          तन्नः सर्वः प्रचोदयात् ॥
+        </p>
+        <div class="sub-heading">✨ Meaning</div>
+        <p>
+          “We meditate on Lord Sai, who embodies Truth and Divinity.  
+          May that Supreme Being enlighten our intellect  
+          and guide us along the path of righteousness.”
+        </p>
+      </div>
+      <!-- RIGHT column -->
+      <div class="right-col">
+        <div class="sub-heading">🎵 Audio</div>
+        <audio controls>
+          <source src="sai-gayathri.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="sub-heading">🎼 Music Sheet</div>
+        <div class="music-sheet">
+          <img src="sai-gayatri-sheet.jpg" alt="Sai Gayatri Music Sheet">
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Dashboard -->
   <div class="section">
@@ -241,62 +320,14 @@
 
   // Language Translations
   const translations = {
-    en: {
-      title: "🌸 Sai Gayatri Shata Laksha Arpan 🌸",
-      tagline: "Offering of One Crore Sai Gayatri Chants",
-      description: "A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of His Centenary Birthday Celebrations.",
-      blessing: "May the collective chants bring peace, love and divine grace to all.",
-      dashboardTitle: "🌼 Chanting Dashboard",
-      dashboardText: "Tally of chants reported by Samithis:",
-      satsangTitle: "🕉️ Monthly Online Satsang",
-      satsangText: "We lovingly invite you for a monthly 1-hour online satsang of Sai Gayatri chanting and bhajans.",
-      nextSession: "Next Session:",
-      linkInfo: "The meeting link will be shared via WhatsApp by your Samithi Convener.",
-      galleryTitle: "📸 Project Glimpses",
-      galleryText: "Memories and moments from our collective chanting offerings:",
-      contactTitle: "📞 Contact Us",
-      contactText: "If you would like to contribute or know more:"
-    },
-    te: {
-      title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸",
-      tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!",
-      description: "భగవాన్ శ్రీ సత్య సాయి బాబా వారి శత జయంతి ఉత్సవాలు సందర్భముగా ఈ పవిత్ర గాయత్రీ జప యజ్ఞము.",
-      blessing: "సామూహిక జపము విశ్వము అందరికి శాంతి, ప్రేమ,దైవానుగ్రహం కలగాలని భవిస్తూ ఈ గాయత్రీ పఠనం.",
-      dashboardTitle: "🌼 జప సంఖ్య",
-      dashboardText: "సమితుల వారు నివేదించిన సంఖ్య:",
-      satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్",
-      satsangText: "ప్రతి నెలా ఒక గంటపాటు ఆన్‌లైన్ సత్సంగ్‌లో పాల్గొనవలసిందిగా ఆహ్వానం.",
-      nextSession: "తదుపరి సత్సంగ్:",
-      linkInfo: "మీ సమితి కన్వీనర్ ద్వారా లింక్ పంపబడుతుంది.",
-      galleryTitle: "📸 ప్రాజెక్ట్ చిత్రాలు",
-      galleryText: "సామూహిక జప యాత్రలో కొన్ని క్షణాలు:",
-      contactTitle: "📞 సంప్రదించండి",
-      contactText: "మరింత తెలుసుకోవాలనుకుంటే:"
-    },
-    hi: {
-      title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸",
-      tagline: "एक करोड़ साई गायत्री जप का अर्पण",
-      description: "भगवान श्री सत्य साई बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर यह पावन गायत्री जप प्रकल्प अर्पित है।",
-      blessing: "सामूहिक जप से सभी को शांति, प्रेम और दिव्य कृपा प्राप्त हो।",
-      dashboardTitle: "🌼 जप प्रगति",
-      dashboardText: "समितियों द्वारा दी गई गणना:",
-      satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग",
-      satsangText: "हम आपको मासिक एक घंटे के ऑनलाइन सत्संग में भाग लेने के लिए आमंत्रित करते हैं।",
-      nextSession: "अगला सत्र:",
-      linkInfo: "लिंक आपके समिति संयोजक द्वारा साझा किया जाएगा।",
-      galleryTitle: "📸 प्रकल्प की झलकियां",
-      galleryText: "हमारी सामूहिक जप यात्रा के कुछ पल:",
-      contactTitle: "📞 संपर्क करें",
-      contactText: "यदि आप अधिक जानना चाहते हैं:"
-    }
+    en: { tagline: "Offering of One Crore Sai Gayatri Chants" },
+    te: { tagline: "ఒక కోటి సాయి గాయత్రి జపాల సమర్పణ" },
+    hi: { tagline: "एक करोड़ साई गायत्री जप का अर्पण" }
   };
-
   document.getElementById("languageSwitcher").addEventListener("change", function() {
     const lang = this.value;
     const t = translations[lang];
-    for (let key in t) {
-      document.getElementById(key).innerHTML = t[key];
-    }
+    if (t.tagline) document.getElementById("tagline").innerHTML = t.tagline;
   });
 </script>
 
