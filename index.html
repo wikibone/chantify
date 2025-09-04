@@ -208,7 +208,6 @@
 .gallery img:hover {
   box-shadow: 0 8px 24px rgba(0,0,0,0.22);
   }
-
 /* Lightbox modal styles */
 .modal {
   display: none;
@@ -218,21 +217,31 @@
   background: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
-  }
+  overflow: auto; /* Allow scrolling if image is too large */
+}
 .modal.active {
   display: flex;
-  }
+}
 .modal-content {
   position: relative;
   padding: 10px;
-  }
+  max-width: 98vw;
+  max-height: 96vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .modal-content img {
-  max-width: 92vw;
-  max-height: 86vh;
-  border-radius: 14px;
+  width: auto;
+  height: auto;
+  max-width: 98vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 6px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-  background:#fff;
-  }
+  background: #fff;
+  display: block;
+}
 .modal-close {
   position: absolute;
   top: 7px;
@@ -243,10 +252,16 @@
   border: none;
   cursor: pointer;
   z-index: 2;
-  }
+}
+
+/* Responsive */
 @media (max-width:650px){
   .gallery img { width: 98vw; height: 170px;}
+  .modal-content img {
+    max-width: 98vw;
+    max-height: 80vh;
   }
+}
 
     /* Contact */
     .contact a {
