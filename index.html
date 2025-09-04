@@ -1,3 +1,9 @@
+<!--
+Fixes:
+- Move misplaced <div class="section">, <h2 id="galleryTitle">, <p id="galleryText">, and <div class="gallery"> wrapping, so that the gallery section is not nested incorrectly.
+- Make sure the "Contact" section and the footer are not inside the gallery or modal.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -186,82 +192,80 @@
     }
     /* Gallery */
     .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 28px;
-  padding: 10px;
-  }
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 28px;
+      padding: 10px;
+    }
+    .gallery img {
+      width: 320px;
+      max-width: 100%;
+      height: 220px;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+      border: 3px solid #f1f1f1;
+      transition: box-shadow 0.2s;
+    }
+    .gallery img:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    }
+    /* Lightbox modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      overflow: auto; /* Allow scrolling if image is too large */
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      position: relative;
+      padding: 10px;
+      max-width: 98vw;
+      max-height: 96vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content img {
+      width: auto;
+      height: auto;
+      max-width: 98vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      background: #fff;
+      display: block;
+    }
+    .modal-close {
+      position: absolute;
+      top: 7px;
+      right: 17px;
+      font-size: 2.4rem;
+      color: #d35400;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+    }
 
-.gallery img {
-  width: 320px;
-  max-width: 100%;
-  height: 220px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-  border: 3px solid #f1f1f1;
-  transition: box-shadow 0.2s;
-  }
-
-.gallery img:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-  }
-/* Lightbox modal styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0; top: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  overflow: auto; /* Allow scrolling if image is too large */
-}
-.modal.active {
-  display: flex;
-}
-.modal-content {
-  position: relative;
-  padding: 10px;
-  max-width: 98vw;
-  max-height: 96vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-content img {
-  width: auto;
-  height: auto;
-  max-width: 98vw;
-  max-height: 92vh;
-  object-fit: contain;
-  border-radius: 6px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-  background: #fff;
-  display: block;
-}
-.modal-close {
-  position: absolute;
-  top: 7px;
-  right: 17px;
-  font-size: 2.4rem;
-  color: #d35400;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 2;
-}
-
-/* Responsive */
-@media (max-width:650px){
-  .gallery img { width: 98vw; height: 170px;}
-  .modal-content img {
-    max-width: 98vw;
-    max-height: 80vh;
-  }
-}
+    /* Responsive */
+    @media (max-width:650px){
+      .gallery img { width: 98vw; height: 170px;}
+      .modal-content img {
+        max-width: 98vw;
+        max-height: 80vh;
+      }
+    }
 
     /* Contact */
     .contact a {
@@ -462,24 +466,23 @@
     </p>
   </div>
   <!-- Photo Gallery -->
-  <div class="gallery">
-    <!-- Photo Gallery -->
-<div class="section">
-  <h2 id="galleryTitle">📸 Project Glimpses</h2>
-  <p id="galleryText">Memories and moments from our collective chanting offerings:</p>
-  <div class="gallery">
-    <img src="photo1.jpg" alt="Chanting Book" onclick="showModal(this.src, this.alt)" />
-    <img src="photo2.jpg" alt="Chanting Count" onclick="showModal(this.src, this.alt)" />
-    <img src="photo3.jpg" alt="Walkeswar Samithi" onclick="showModal(this.src, this.alt)" />
-    <!-- Add more images as needed -->
+  <div class="section">
+    <h2 id="galleryTitle">📸 Project Glimpses</h2>
+    <p id="galleryText">Memories and moments from our collective chanting offerings:</p>
+    <div class="gallery">
+      <img src="photo1.jpg" alt="Chanting Book" onclick="showModal(this.src, this.alt)" />
+      <img src="photo2.jpg" alt="Chanting Count" onclick="showModal(this.src, this.alt)" />
+      <img src="photo3.jpg" alt="Walkeswar Samithi" onclick="showModal(this.src, this.alt)" />
+      <!-- Add more images as needed -->
+    </div>
   </div>
-<!-- Modal for viewing enlarged photo -->
-<div class="modal" id="galleryModal" onclick="closeModal(event)">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal(event)" aria-label="Close">&times;</button>
-    <img id="modalImg" src="" alt="" />
+  <!-- Modal for viewing enlarged photo -->
+  <div class="modal" id="galleryModal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(event)" aria-label="Close">&times;</button>
+      <img id="modalImg" src="" alt="" />
+    </div>
   </div>
-</div>
   <!-- Contact -->
   <div class="section contact">
     <h2 id="contactTitle">📞 Contact Us</h2>
@@ -491,7 +494,7 @@
   <footer>
     &copy; 2025 Chantify.org | All Rights Reserved
     <div style="margin-top:10px; font-size:0.95rem; color:#888;">
-    <em>Disclaimer: This project is for spiritual inspiration only and has no commercial intent. All audio and images used are for devotional purposes. Please contact organizers for clarifications.</em>
+      <em>Disclaimer: This project is for spiritual inspiration only and has no commercial intent. All audio and images used are for devotional purposes. Please contact organizers for clarifications.</em>
     </div>
   </footer>
   <script>
@@ -499,19 +502,19 @@
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
     }
-function showModal(imgSrc, imgAlt){
-  document.getElementById("modalImg").src = imgSrc;
-  document.getElementById("modalImg").alt = imgAlt;
-  document.getElementById("galleryModal").classList.add("active");
-}
-function closeModal(e) {
-  // Only close if click is on overlay, button, or modal itself but not image
-  if (e.target.classList.contains("modal") || e.target.classList.contains("modal-close")) {
-    document.getElementById("galleryModal").classList.remove("active");
-    document.getElementById("modalImg").src="";
-    document.getElementById("modalImg").alt="";
-  }
-}
+    function showModal(imgSrc, imgAlt){
+      document.getElementById("modalImg").src = imgSrc;
+      document.getElementById("modalImg").alt = imgAlt;
+      document.getElementById("galleryModal").classList.add("active");
+    }
+    function closeModal(e) {
+      // Only close if click is on overlay, button, or modal itself but not image
+      if (e.target.classList.contains("modal") || e.target.classList.contains("modal-close")) {
+        document.getElementById("galleryModal").classList.remove("active");
+        document.getElementById("modalImg").src="";
+        document.getElementById("modalImg").alt="";
+      }
+    }
     // All translations for entire website
     const translations = {
       en: {
@@ -552,16 +555,16 @@ function closeModal(e) {
         title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸",
         tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!",
         description:
-          "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంలో వారి దివ్య పరిమళవంతుని పాదాల వద్ద ఈ పవిత్ర గాయత్రీ జపయజ్ఞము ప్రేమతో అర్పిస్తున్నాము.",
+          "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంలో వారి దివ్య పరిమళవ[...]",
         blessing:
-          "సామూహిక జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం మరియు దైవసాన్నిధ్యం తీసుకురావాలని ఆకాంక్షిస్తూ ఈ గాయత్రీ పఠనం.",
+          "సామూహిక జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం మరియు దైవసాన్నిధ్యం తీస��[...]",
         mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం",
         lyricsTitle: "📜 మంత్రం",
         lyricsText:
-          "ఓం సాయి శ్వరాయ విజ్ఞమహే  <br /> సత్య దేవాయ ధీమహి  <br /> తన్నః సర్వః ప్రఛోదయాత్ ॥",
+          "ఓం సాయి శ్వరాయ విజ్ఞమహే  <br /> సత్య దేవాయ ధీమహి  <br /> తన్నః సర్వః ప్రఛోదయాత్ �[...]",
         meaningTitle: "✨ అర్థం",
         meaningText:
-          "“ఈ సాయిని మనం సర్వోన్నత దైవ అవతారంగా తెలుసుకున్నాము. ఈ సత్యదేవుని గురించి మనం ధ్యానిస్తాము. ఈ సర్వశక్తిమంతుడైన సాయి మనల్ని ముక్తి మార్గంలో నడిపించుగాక.”",
+          "“ఈ సాయిని మనం సర్వోన్నత దైవ అవతారంగా తెలుసుకున్నాము. ఈ సత్యదేవుని గుర��[...]",
         audioTitle: "🎵 ఆడియో",
         sheetTitle: "🎼 సంగీతం",
         dashboardTitle: "🌼 జప సంఖ్య",
@@ -574,7 +577,7 @@ function closeModal(e) {
         totalChantsTitle: "🌹 మొత్తం: ఇప్పటి వరకు 71,120 సార్లు!",
         satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్",
         satsangText:
-          "సాయి గాయత్రి జపం, భజనలు కోసం ప్రతి నెల 1 గంట ఆన్‌లైన్ సత్సంగ్ లో పాల్గొనండి.",
+          "సాయి గాయత్రి జపం, భజనలు కోసం ప్రతి నెల 1 గంట ఆన్‌లైన్ సత్సంగ్ లో పాల్గొన�[...]",
         nextSession: "తదుపరి సమావేశం:",
         linkInfo: "మీ సమితి కన్వీనర్ ద్వారా మీటింగ్ లింక్ పంపబడుతుంది.",
         galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు",
@@ -586,7 +589,7 @@ function closeModal(e) {
         title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸",
         tagline: "एक करोड़ साई गायत्री जाप का अर्पण",
         description:
-          "भगवान श्री सत्य साईं बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर उनके दिव्य चरणों में यह पवित्र भक्ति प्रकल्प प्रेमपूर्वक अर्पित किया गया है।",
+          "भगवान श्री सत्य साईं बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर उनके दिव्��[...]",
         blessing: "सामूहिक जाप सभी के लिए शांति, प्रेम और दिव्य कृपा लेकर आए।",
         mantraTitle: "🕉️ साई गायत्री मंत्र",
         lyricsTitle: "📜 गीत",
@@ -594,7 +597,7 @@ function closeModal(e) {
           "ॐ सायेश्वराय विद्महे <br /> सत्यदेवाय धीमहि <br /> तन्नः सर्वः प्रचोदयात् ॥",
         meaningTitle: "✨ अर्थ",
         meaningText:
-          "“हम भगवान साईं का ध्यान करते हैं, जो सत्य और दिव्यता के प्रतीक हैं। वह परमात्मा हमारे बुद्धि को प्रकाशित करें और हमें धर्म के मार्ग पर चलने का मार्गदर्शन करें।”",
+          "“हम भगवान साईं का ध्यान करते हैं, जो सत्य और दिव्यता के प्रतीक हैं। वह पर��[...]",
         audioTitle: "🎵 ऑडियो",
         sheetTitle: "🎼 संगीत पत्रक",
         dashboardTitle: "🌼 जाप प्रगति",
@@ -607,7 +610,7 @@ function closeModal(e) {
         totalChantsTitle: "🌹 कुल: अब तक 71,120 जाप!",
         satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग",
         satsangText:
-          "हम आपको मासिक 1 घंटे के ऑनलाइन सत्संग में शामिल होने का स्नेहपूर्वक निमंत्रण देते हैं जिसमें साई गायत्री जाप और भजन होंगे।",
+          "हम आपको मासिक 1 घंटे के ऑनलाइन सत्संग में शामिल होने का स्नेहपूर्वक निमं�[...]",
         nextSession: "अगला सत्र:",
         linkInfo:
           "आपके समिति संयोजक द्वारा व्हाट्सएप पर बैठक लिंक साझा किया जाएगा।",
