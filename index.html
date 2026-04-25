@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta name="description" content="Sai Gayathri Shatalaksha Arpan - A devotional offering of One Crore Sai Gayathri chants for Sri Sathya Sai Baba's Centenary year." />
+  <meta name="description" content="Sai Gayathri Shatalaksha Arpan - A devotional offering of One Crore Sai Gayathri chants." />
   <title>1 Crore Sai Gayathri Chant Project</title>
   
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -12,65 +12,99 @@
   <style>
     :root { --primary-color: #d35400; --secondary-color: #333; --background-color: #fdfdfd; --card-background: #fff; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: "Verdana", sans-serif; background-color: var(--background-color); color: var(--secondary-color); font-size: 16px; line-height: 1.6; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; }
-    header { background-color: var(--primary-color); color: white; text-align: center; padding: 20px 15px 30px 15px; }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; max-width: 1200px; margin-left: auto; margin-right: auto; }
-    button.toggle-darkmode { width: 40px; height: 40px; border: none; border-radius: 50%; background-color: rgba(255, 255, 255, 0.8); cursor: pointer; font-size: 20px; color: var(--primary-color); display: flex; align-items: center; justify-content: center; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    .language-selector { display: flex; gap: 10px; font-size: 1rem; font-weight: bold; user-select: none; flex-wrap: wrap; justify-content: center; }
-    .language-option { cursor: pointer; padding: 8px 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.8); color: var(--primary-color); transition: 0.3s; border: 2px solid transparent; white-space: nowrap; }
-    .language-option.active { background: white; color: var(--primary-color); border: 2px solid #a64b00; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    body { font-family: "Verdana", sans-serif; background-color: var(--background-color); color: var(--secondary-color); font-size: 16px; line-height: 1.6; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; padding-top: 60px; /* Space for sticky header */ }
+    
+    /* 1. STICKY GLASSMORPHISM TOP BAR */
+    .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(211, 84, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    
+    button.toggle-darkmode { width: 36px; height: 36px; border: none; border-radius: 50%; background-color: rgba(255, 255, 255, 0.9); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    button.toggle-darkmode:hover { transform: scale(1.1); }
+
+    /* 2. CIRCULAR ICON LANGUAGE SELECTOR */
+    .language-selector { display: flex; gap: 12px; user-select: none; }
+    .language-option { cursor: pointer; width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid transparent; }
+    .language-option:hover { background: rgba(255, 255, 255, 0.9); transform: scale(1.05); }
+    .language-option.active { background: white; color: var(--primary-color); border: 2px solid #a64b00; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transform: scale(1.1); }
+
+    header { background-color: var(--primary-color); color: white; text-align: center; padding: 30px 15px 40px 15px; margin-top: -60px; padding-top: 90px; }
     header h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 10px; }
     header h2 { font-size: clamp(1.1rem, 3vw, 1.5rem); margin-bottom: 15px; font-weight: bold; color: #fff; }
-    header p { font-size: clamp(0.9rem, 2vw, 1.1rem); max-width: 800px; margin: 0 auto 10px auto; }
+    header p { font-size: clamp(0.9rem, 2vw, 1.1rem); max-width: 800px; margin: 0 auto; }
+    
     .section { padding: 40px 20px; text-align: center; border-bottom: 1px solid #ddd; max-width: 1200px; margin: 0 auto; }
     h2 { color: var(--primary-color); margin-bottom: 20px; font-size: clamp(1.4rem, 4vw, 1.8rem); }
+    
     .mantra-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; text-align: left; }
     .card { background: var(--card-background); padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
     .sub-heading { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
     .lyrics { font-size: 1.3rem; text-align: center; line-height: 2; margin: 15px 0; }
-    audio { width: 100%; border-radius: 30px; outline: none; }
-    .music-sheet img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .dashboard { max-width: 700px; margin: auto; border: 2px solid #eee; border-radius: 12px; padding: 20px; background: var(--card-background); text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    .samithi { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--background-color); margin: 10px 0; border-radius: 8px; border: 1px solid #eee; transition: transform 0.2s; }
-    .samithi:hover { transform: translateX(5px); border-color: var(--primary-color); }
+    audio { width: 100%; border-radius: 30px; outline: none; margin-bottom: 15px; }
+    .music-sheet img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; }
+    .music-sheet img:hover { transform: scale(1.02); }
+
+    .dashboard { max-width: 700px; margin: auto; border: 2px solid #eee; border-radius: 12px; padding: 25px 20px; background: var(--card-background); text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    
+    /* 3. PROGRESS BAR UI */
+    .progress-container { width: 100%; height: 12px; background-color: #eee; border-radius: 10px; margin: 25px 0 10px 0; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, #f39c12, #d35400); width: 0%; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px; }
+    .progress-text { text-align: right; font-size: 0.85rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px; }
+
+    .samithi { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--background-color); margin: 10px 0; border-radius: 8px; border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s; }
+    .samithi:hover { transform: translateX(5px); border-color: var(--primary-color); box-shadow: 0 2px 8px rgba(211,84,0,0.1); }
+
     .admin-panel { display: none; background: #fffde7; padding: 25px; border: 2px dashed #fbc02d; border-radius: 12px; margin: 20px auto; max-width: 700px; text-align: left; }
     .admin-panel.active { display: block; animation: fadeInDown 0.4s ease-out; }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
-    input, select, .act-btn { padding: 14px; margin: 10px 0; width: 100%; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; font-family: inherit; }
-    .act-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 1.1rem; }
+    
+    input, select, .act-btn { padding: 14px; margin: 10px 0; width: 100%; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; font-family: inherit; transition: 0.3s; }
+    input:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(211,84,0,0.1); }
+    .act-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
     .act-btn:hover { background: #b94a00; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(211,84,0,0.3); }
+
     .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 10px 0; }
     .gallery img { width: 100%; height: 250px; object-fit: cover; cursor: pointer; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
     .gallery img:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    
     .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; padding: 20px; }
     .modal.active { display: flex; animation: fadeIn 0.3s; }
     .modal-content img { max-width: 100%; max-height: 90vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* 4. TOAST NOTIFICATIONS */
+    #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+    @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
     footer { text-align: center; padding: 30px 20px; background-color: #eee; font-size: 0.95rem; }
-    body.dark { --primary-color: #f39c12; --secondary-color: #f1f1f1; --background-color: #1a1a1a; --card-background: #2d2d2d; }
+    
+    body.dark { --primary-color: #e67e22; --secondary-color: #f1f1f1; --background-color: #1a1a1a; --card-background: #2d2d2d; }
+    body.dark .top-bar { background: rgba(30, 30, 30, 0.85); border-bottom: 1px solid #333; }
     body.dark footer { background-color: #111; color: #aaa; }
     body.dark .samithi { border-color: #444; }
-    body.dark .admin-panel { background: #332b00; border-color: #f39c12; color: #fff;}
+    body.dark .admin-panel { background: #2c2514; border-color: #e67e22; color: #fff;}
+    body.dark .progress-container { background-color: #444; }
+
     .live-dot { height: 10px; width: 10px; background-color: #2ecc71; border-radius: 50%; display: inline-block; margin-right: 8px; animation: blink 2s infinite; }
     @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.4;} 100% {opacity: 1;} }
-    @media (max-width: 400px) { .top-bar { justify-content: center; } .language-selector { flex-direction: column; width: 100%; } .language-option { text-align: center; } .samithi { flex-direction: column; text-align: center; gap: 5px; } }
   </style>
 </head>
 <body id="mainBody">
 
+  <div class="top-bar">
+    <button class="toggle-darkmode" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌗</button>
+    <nav class="language-selector">
+      <span class="language-option active" data-lang="en" onclick="setLanguage('en')">EN</span>
+      <span class="language-option" data-lang="te" onclick="setLanguage('te')">తె</span>
+      <span class="language-option" data-lang="hi" onclick="setLanguage('hi')">हिं</span>
+    </nav>
+  </div>
+
   <header>
-    <div class="top-bar">
-      <button class="toggle-darkmode" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌗</button>
-      <nav class="language-selector">
-        <span class="language-option active" data-lang="en" onclick="setLanguage('en')">English</span>
-        <span class="language-option" data-lang="te" onclick="setLanguage('te')">తెలుగు</span>
-        <span class="language-option" data-lang="hi" onclick="setLanguage('hi')">हिंदी</span>
-      </nav>
-    </div>
     <h1 id="title">🌸 Sai Gayathri Shatalaksha Arpan 🌸</h1>
     <h2 id="tagline">Offering of One Crore Sai Gayathri Chants</h2>
     <p id="description">A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.</p>
-    <p id="blessing"><em>May the collective chants bring peace, love and divine grace to all.</em></p>
+    <p id="blessing" style="margin-top:10px;"><em>May the collective chants bring peace, love and divine grace to all.</em></p>
   </header>
 
   <div class="section">
@@ -80,13 +114,13 @@
         <div class="sub-heading" id="lyricsTitle">📜 Lyrics</div>
         <p class="lyrics" id="lyricsText">Om Sayeeshwaraya Vidhmahe <br /> Sathya Devaya Dheemahi <br /> Thannah Sarvah Prachodayaat</p>
         <div class="sub-heading" id="meaningTitle">✨ Meaning</div>
-        <p id="meaningText">“We meditate on Lord Sai, who embodies Truth and Divinity. May that Supreme Being enlighten our intellect and guide us along the path of righteousness.”</p>
+        <p id="meaningText" style="line-height: 1.8;">“We meditate on Lord Sai, who embodies Truth and Divinity. May that Supreme Being enlighten our intellect and guide us along the path of righteousness.”</p>
       </div>
       <div class="card right-col">
         <div class="sub-heading" id="audioTitle">🎵 Audio</div>
         <audio controls><source src="sai-gayathri.mp3" type="audio/mpeg"></audio>
         <div class="sub-heading" id="sheetTitle" style="margin-top:20px;">🎼 Music Sheet</div>
-        <div class="music-sheet"><img src="sai-gayatri-sheet.jpg" alt="Music Sheet"></div>
+        <div class="music-sheet"><img src="sai-gayatri-sheet.jpg" alt="Music Sheet" onclick="openModal(this.src)"></div>
       </div>
     </div>
   </div>
@@ -94,29 +128,38 @@
   <div class="section">
     <h2 id="dashboardTitle">🌼 Live Chanting Dashboard</h2>
     <p id="dashboardText">Tally of chants reported by Samithis (Updating in real-time):</p>
+    
     <div class="dashboard">
-      <div style="text-align: right; font-size: 0.85rem; color: #2ecc71; margin-bottom: 15px; font-weight: bold;">
-        <span class="live-dot"></span><span id="cloudStatus">Cloud Connected</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+        <h3 id="totalChantsTitle" style="color: var(--primary-color); margin:0;">🌹 Total: 0</h3>
+        <div style="font-size: 0.8rem; color: #2ecc71; font-weight: bold;">
+          <span class="live-dot"></span><span id="cloudStatus">Live</span>
+        </div>
       </div>
-      <div id="samithiList" style="text-align: center; color: #888;">Fetching live data...</div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-text" id="progressText">0% of 1 Crore Goal</div>
+
+      <div id="samithiList" style="text-align: center; color: #888; margin-top: 15px;">Fetching live data...</div>
     </div>
-    <h3 id="totalChantsTitle" style="margin-top: 25px; color: var(--primary-color); transition: transform 0.3s;">🌹 Total: 0 chants so far!</h3>
   </div>
 
   <div id="adminPanel" class="admin-panel">
     <h3 id="adminTitle">🛠️ Cloud Management Portal</h3>
     <p id="adminSubtitle" style="font-size: 0.9rem; margin-bottom: 15px;">Numbers entered here are instantly sent to the cloud database.</p>
     
-    <label id="selectTargetLabel" for="samithiSelect">Select Target:</label>
+    <label id="selectTargetLabel" for="samithiSelect" style="font-weight:bold;">Select Target:</label>
     <select id="samithiSelect" onchange="toggleNewInput()">
       </select>
     
     <div id="newNameGroup">
-      <label id="newNameLabel">New Samithi Name:</label>
+      <label id="newNameLabel" style="font-weight:bold;">New Samithi Name:</label>
       <input type="text" id="newNameInput" placeholder="e.g. Bandra Samithi">
     </div>
 
-    <label id="countLabel">Chants to Add (Additive):</label>
+    <label id="countLabel" style="font-weight:bold;">Chants to Add (Additive):</label>
     <input type="number" id="additionalCount" placeholder="Enter number of new chants">
     
     <button class="act-btn" onclick="pushToCloud()" id="cloudBtn">Update Live Database ☁️</button>
@@ -126,8 +169,8 @@
     <h2 id="satsangTitle">🕉️ Monthly Online Satsang</h2>
     <div class="card" style="max-width: 600px; margin: auto;">
       <p id="satsangText">We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri chanting and bhajans.</p>
-      <p style="font-size:1.1rem; color:var(--primary-color); margin: 15px 0;"><strong id="nextSession">Next Session:</strong> 3rd Sunday of the month 6:00 PM IST</p>
-      <p id="linkInfo" style="font-size:0.9rem;">The meeting link will be shared via WhatsApp by your Samithi Convener.</p>
+      <p style="font-size:1.1rem; color:var(--primary-color); margin: 15px 0; font-weight:bold;" id="nextSession">Next Session: 3rd Sunday of the month 6:00 PM IST</p>
+      <p id="linkInfo" style="font-size:0.95rem;">The meeting link will be shared via WhatsApp by your Samithi Convener.</p>
     </div>
   </div>
 
@@ -146,8 +189,8 @@
     <h2 id="contactTitle">📞 Contact Us</h2>
     <p id="contactText">If you would like to contribute or know more:</p>
     <div class="card" style="max-width: 400px; margin: 20px auto;">
-      <a href="mailto:chantconnect@gmail.com" style="display:block; color:var(--primary-color); text-decoration:none; margin-bottom: 10px; font-weight:bold;">✉️ chantconnect@gmail.com</a>
-      <a href="https://chantconnect.com" style="display:block; color:var(--primary-color); text-decoration:none; font-weight:bold;">🌐 chantconnect.com</a>
+      <a href="mailto:chantconnect@gmail.com" style="display:block; color:var(--primary-color); text-decoration:none; margin-bottom: 10px; font-weight:bold; font-size:1.1rem;">✉️ chantconnect@gmail.com</a>
+      <a href="https://chantconnect.com" style="display:block; color:var(--primary-color); text-decoration:none; font-weight:bold; font-size:1.1rem;">🌐 chantconnect.com</a>
     </div>
   </div>
 
@@ -155,14 +198,16 @@
     <div class="modal-content"><img id="modalImg" src="" alt="Enlarged view"></div>
   </div>
 
+  <div id="toast">Message here</div>
+
   <footer>
     &copy; 2025-2026 ChantConnect.com | All Rights Reserved
-    <br><button id="adminAccessBtn" onclick="showAdmin()" style="background:none; border:none; color:#888; font-size:0.8rem; cursor:pointer; margin-top:15px; padding: 10px;">Coordinator Access</button>
+    <br><button id="adminAccessBtn" onclick="showAdmin()" style="background:none; border:none; color:#888; font-size:0.8rem; cursor:pointer; margin-top:20px; padding: 10px; text-decoration:underline;">Coordinator Login</button>
   </footer>
 
   <script>
     // ==========================================
-    // YOUR LIVE FIREBASE CONFIGURATION
+    // 🚨 YOUR LIVE FIREBASE CONFIGURATION 🚨
     // ==========================================
     const firebaseConfig = {
       apiKey: "AIzaSyDCjj4W2x1al0VuDb5aa4IFIeSAUKABgdE",
@@ -171,13 +216,13 @@
       projectId: "chantconnect-ea427",
       storageBucket: "chantconnect-ea427.firebasestorage.app",
       messagingSenderId: "79754745268",
-      appId: "1:79754745268:web:2735b9db3c5dbc23924ee1",
-      measurementId: "G-LN0QJ5HW6B"
+      appId: "1:79754745268:web:2735b9db3c5dbc23924ee1"
     };
     
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
     
+    const TARGET_GOAL = 10000000; // 1 Crore
     let localSamithiData = {};
     let currentLang = 'en';
 
@@ -186,25 +231,29 @@
     // ==========================================
     const t = {
       en: { 
-        title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", description: "A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.", blessing: "May the collective chants bring peace, love and divine grace to all.", mantraTitle: "🕉️ Sai Gayathri Mantra", lyricsTitle: "📜 Lyrics", lyricsText: "Om Sayeeshwaraya Vidhmahe <br /> Sathya Devaya Dheemahi <br /> Thannah Sarvah Prachodayaat", meaningTitle: "✨ Meaning", meaningText: "“We meditate on Lord Sai, who embodies Truth and Divinity. May that Supreme Being enlighten our intellect and guide us along the path of righteousness.”", audioTitle: "🎵 Audio", sheetTitle: "🎼 Music Sheet", dashboardTitle: "🌼 Live Chanting Dashboard", dashboardText: "Tally of chants reported by Samithis (Updating in real-time):", cloudStatus: "Cloud Connected", fetchingData: "Fetching live data...", totalChantsTitle: "🌹 Total: {n} chants so far!", satsangTitle: "🕉️ Monthly Online Satsang", satsangText: "We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri chanting and bhajans.", nextSession: "Next Session: 3rd Sunday of the month 6:00 PM IST", linkInfo: "The meeting link will be shared via WhatsApp by your Samithi Convener.", galleryTitle: "📸 Project Glimpses", contactTitle: "📞 Contact Us", contactText: "If you would like to contribute or know more:", adminTitle: "🛠️ Cloud Management Portal", adminSubtitle: "Numbers entered here are instantly sent to the cloud database.", selectTargetLabel: "Select Target:", addNewOption: "+ Add New Samithi Name", newNameLabel: "New Samithi Name:", newNameInput: "e.g. Bandra Samithi", countLabelAdd: "Chants to Add (Additive):", countLabelNew: "Initial Chant Count:", additionalCount: "Enter number of new chants", cloudBtn: "Update Live Database ☁️", syncingBtn: "Syncing... ⏳", adminAccessBtn: "Coordinator Access", chantsWord: "chants", errorNum: "Please enter a valid number of chants.", errorName: "Enter Samithi Name", successAlert: "Success! The live website has been updated globally.", failAlert: "Cloud Update Failed: ", pwPrompt: "Password:"
+        title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", description: "A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.", blessing: "May the collective chants bring peace, love and divine grace to all.", mantraTitle: "🕉️ Sai Gayathri Mantra", lyricsTitle: "📜 Lyrics", lyricsText: "Om Sayeeshwaraya Vidhmahe <br /> Sathya Devaya Dheemahi <br /> Thannah Sarvah Prachodayaat", meaningTitle: "✨ Meaning", meaningText: "“We meditate on Lord Sai, who embodies Truth and Divinity. May that Supreme Being enlighten our intellect and guide us along the path of righteousness.”", audioTitle: "🎵 Audio", sheetTitle: "🎼 Music Sheet", dashboardTitle: "🌼 Live Chanting Dashboard", dashboardText: "Tally of chants reported by Samithis (Updating in real-time):", cloudStatus: "Live", fetchingData: "Fetching live data...", totalChantsTitle: "🌹 Total: {n}", progressText: "{p}% of 1 Crore Goal", satsangTitle: "🕉️ Monthly Online Satsang", satsangText: "We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri chanting and bhajans.", nextSession: "Next Session: 3rd Sunday of the month 6:00 PM IST", linkInfo: "The meeting link will be shared via WhatsApp by your Samithi Convener.", galleryTitle: "📸 Project Glimpses", contactTitle: "📞 Contact Us", contactText: "If you would like to contribute or know more:", adminTitle: "🛠️ Cloud Management Portal", adminSubtitle: "Numbers entered here are instantly sent to the cloud database.", selectTargetLabel: "Select Target:", addNewOption: "+ Add New Samithi Name", newNameLabel: "New Samithi Name:", newNameInput: "e.g. Bandra Samithi", countLabelAdd: "Chants to Add (Additive):", countLabelNew: "Initial Chant Count:", additionalCount: "Enter number of new chants", cloudBtn: "Update Live Database ☁️", syncingBtn: "Syncing... ⏳", adminAccessBtn: "Coordinator Login", chantsWord: "chants", errorNum: "Please enter a valid number of chants.", errorName: "Enter Samithi Name", successAlert: "Success! The live website has been updated.", failAlert: "Cloud Update Failed: ", pwPrompt: "Enter Password:"
       },
       te: { 
-        title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!", description: "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంలో వారి దివ్య పాదాల వద్ద ఈ పవిత్ర జపయజ్ఞము ప్రేమతో అర్పిస్తున్నాము.", blessing: "సామూహిక జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం తీసుకురావాలని ఆకాంక్షిస్తూ...", mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం", lyricsTitle: "📜 మంత్రం", lyricsText: "ఓం సాయిశ్వారాయ విద్మహే <br /> సత్య దేవాయ ధీమహి <br /> తన్న సర్వః ప్రచోదయాత్ ॥", meaningTitle: "✨ అర్థం", meaningText: "“భగవాన్ శ్రీ సత్యసాయి బాబా సర్వోన్నత దైవ అవతారంగా ధ్యానిస్తాము. ఆ పరమాత్మ మన బుద్ధిని ప్రకాశింపజేయుగాక.”", audioTitle: "🎵 ఆడియో", sheetTitle: "🎼 సంగీతం", dashboardTitle: "🌼 ప్రత్యక్ష జప సంఖ్య", dashboardText: "సమితులు నివేదించిన సంఖ్య (రియల్-టైమ్‌లో అప్‌డేట్ అవుతోంది):", cloudStatus: "క్లౌడ్ కనెక్ట్ చేయబడింది", fetchingData: "లైవ్ డేటా తీసుకుంటోంది...", totalChantsTitle: "🌹 మొత్తం: {n} సార్లు!", satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్", satsangText: "సాయి గాయత్రి జపం కోసం ప్రతి నెల 1 గంట ఆన్‌లైన్ సత్సంగ్ లో పాల్గొనండి.", nextSession: "తదుపరి సమావేశం: నెలలో 3వ ఆదివారం సాయంత్రం 6:00 గంటలకు", linkInfo: "మీ సమితి కన్వీనర్ ద్వారా మీటింగ్ లింక్ పంపబడుతుంది.", galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు", contactTitle: "📞 సంప్రదించండి", contactText: "మరింత తెలుసుకోవాలనుకుంటే:", adminTitle: "🛠️ క్లౌడ్ మేనేజ్‌మెంట్ పోర్టల్", adminSubtitle: "ఇక్కడ నమోదు చేసిన సంఖ్యలు వెంటనే క్లౌడ్ డేటాబేస్‌కు పంపబడతాయి.", selectTargetLabel: "సమితిని ఎంచుకోండి:", addNewOption: "+ కొత్త సమితి పేరును జోడించండి", newNameLabel: "కొత్త సమితి పేరు:", newNameInput: "ఉదా. బాంద్రా సమితి", countLabelAdd: "జోడించాల్సిన జపాలు:", countLabelNew: "ప్రారంభ జపాల సంఖ్య:", additionalCount: "జపాల సంఖ్యను నమోదు చేయండి", cloudBtn: "డేటాబేస్ అప్‌డేట్ చేయండి ☁️", syncingBtn: "సింక్ అవుతోంది... ⏳", adminAccessBtn: "కోఆర్డినేటర్ లాగిన్", chantsWord: "జపాలు", errorNum: "దయచేసి సరైన సంఖ్యను నమోదు చేయండి.", errorName: "సమితి పేరు నమోదు చేయండి", successAlert: "విజయం! వెబ్‌సైట్ ప్రపంచవ్యాప్తంగా అప్‌డేట్ చేయబడింది.", failAlert: "క్లౌడ్ అప్‌డేట్ విఫలమైంది: ", pwPrompt: "పాస్‌వర్డ్:"
+        title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!", description: "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంలో వారి దివ్య పాదాల వద్ద ఈ పవిత్ర జపయజ్ఞము ప్రేమతో అర్పిస్తున్నాము.", blessing: "సామూహిక జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం తీసుకురావాలని ఆకాంక్షిస్తూ...", mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం", lyricsTitle: "📜 మంత్రం", lyricsText: "ఓం సాయిశ్వారాయ విద్మహే <br /> సత్య దేవాయ ధీమహి <br /> తన్న సర్వః ప్రచోదయాత్ ॥", meaningTitle: "✨ అర్థం", meaningText: "“భగవాన్ శ్రీ సత్యసాయి బాబా సర్వోన్నత దైవ అవతారంగా ధ్యానిస్తాము. ఆ పరమాత్మ మన బుద్ధిని ప్రకాశింపజేయుగాక.”", audioTitle: "🎵 ఆడియో", sheetTitle: "🎼 సంగీతం", dashboardTitle: "🌼 ప్రత్యక్ష జప సంఖ్య", dashboardText: "సమితులు నివేదించిన సంఖ్య (రియల్-టైమ్‌లో అప్‌డేట్ అవుతోంది):", cloudStatus: "లైవ్", fetchingData: "లైవ్ డేటా తీసుకుంటోంది...", totalChantsTitle: "🌹 మొత్తం: {n}", progressText: "కోటి లక్ష్యంలో {p}% పూర్తయింది", satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్", satsangText: "సాయి గాయత్రి జపం కోసం ప్రతి నెల 1 గంట ఆన్‌లైన్ సత్సంగ్ లో పాల్గొనండి.", nextSession: "తదుపరి సమావేశం: నెలలో 3వ ఆదివారం సాయంత్రం 6:00 గంటలకు", linkInfo: "మీ సమితి కన్వీనర్ ద్వారా మీటింగ్ లింక్ పంపబడుతుంది.", galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు", contactTitle: "📞 సంప్రదించండి", contactText: "మరింత తెలుసుకోవాలనుకుంటే:", adminTitle: "🛠️ క్లౌడ్ మేనేజ్‌మెంట్ పోర్టల్", adminSubtitle: "ఇక్కడ నమోదు చేసిన సంఖ్యలు వెంటనే క్లౌడ్ డేటాబేస్‌కు పంపబడతాయి.", selectTargetLabel: "సమితిని ఎంచుకోండి:", addNewOption: "+ కొత్త సమితి పేరును జోడించండి", newNameLabel: "కొత్త సమితి పేరు:", newNameInput: "ఉదా. బాంద్రా సమితి", countLabelAdd: "జోడించాల్సిన జపాలు:", countLabelNew: "ప్రారంభ జపాల సంఖ్య:", additionalCount: "జపాల సంఖ్యను నమోదు చేయండి", cloudBtn: "డేటాబేస్ అప్‌డేట్ చేయండి ☁️", syncingBtn: "సింక్ అవుతోంది... ⏳", adminAccessBtn: "కోఆర్డినేటర్ లాగిన్", chantsWord: "జపాలు", errorNum: "దయచేసి సరైన సంఖ్యను నమోదు చేయండి.", errorName: "సమితి పేరు నమోదు చేయండి", successAlert: "విజయం! వెబ్‌సైట్ అప్‌డేట్ చేయబడింది.", failAlert: "క్లౌడ్ అప్‌డేట్ విఫలమైంది: ", pwPrompt: "పాస్‌వర్డ్:"
       },
       hi: { 
-        title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", description: "भगवान श्री सत्य साईं बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर उनके दिव्य चरणों में यह पवित्र भक्ति प्रकल्प अर्पित है।", blessing: "सामूहिक जाप सभी के लिए शांति, प्रेम और दिव्य कृपा लेकर आए।", mantraTitle: "🕉️ साई गायत्री मंत्र", lyricsTitle: "📜 गीत", lyricsText: "ॐ सायेश्वराय विधमहे <br /> सत्यदेवाय धीमहि <br /> तन्न सर्वः प्रचोदयात् ॥", meaningTitle: "✨ अर्थ", meaningText: "“हम भगवान साईं का ध्यान करते हैं, जो सत्य और दिव्यता के प्रतीक हैं। वह परमात्मा हमारे बुद्धि को प्रकाशित करें।”", audioTitle: "🎵 ऑडियो", sheetTitle: "🎼 संगीत पत्रक", dashboardTitle: "🌼 लाइव जाप प्रगति", dashboardText: "समितियों द्वारा रिपोर्ट की गई गिनती (वास्तविक समय में अपडेट हो रही है):", cloudStatus: "क्लाउड से जुड़ा हुआ", fetchingData: "लाइव डेटा प्राप्त किया जा रहा है...", totalChantsTitle: "🌹 कुल: {n} जाप!", satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग", satsangText: "हम आपको मासिक 1 घंटे के ऑनलाइन सत्संग में शामिल होने का निमंत्रण देते हैं।", nextSession: "अगला सत्र: महीने का तीसरा रविवार शाम 6:00 बजे", linkInfo: "आपके समिति संयोजक द्वारा व्हाट्सएप पर बैठक लिंक साझा किया जाएगा।", galleryTitle: "📸 प्रोजेक्ट झलकियाँ", contactTitle: "📞 संपर्क करें", contactText: "यदि आप योगदान करना चाहते हैं:", adminTitle: "🛠️ क्लाउड प्रबंधन पोर्टल", adminSubtitle: "यहां दर्ज किए गए नंबर तुरंत क्लाउड डेटाबेस में भेजे जाते हैं।", selectTargetLabel: "समिति चुनें:", addNewOption: "+ नया समिति नाम जोड़ें", newNameLabel: "नया समिति नाम:", newNameInput: "उदा. बांद्रा समिति", countLabelAdd: "जोड़ने के लिए जाप:", countLabelNew: "प्रारंभिक जाप संख्या:", additionalCount: "नए जाप की संख्या दर्ज करें", cloudBtn: "डेटाबेस अपडेट करें ☁️", syncingBtn: "सिंक हो रहा है... ⏳", adminAccessBtn: "समन्वयक लॉगिन", chantsWord: "जाप", errorNum: "कृपया एक वैध संख्या दर्ज करें।", errorName: "समिति का नाम दर्ज करें", successAlert: "सफलता! लाइव वेबसाइट को विश्व स्तर पर अपडेट कर दिया गया है।", failAlert: "क्लाउड अपडेट विफल: ", pwPrompt: "पासवर्ड:"
+        title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", description: "भगवान श्री सत्य साईं बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर उनके दिव्य चरणों में यह पवित्र भक्ति प्रकल्प अर्पित है।", blessing: "सामूहिक जाप सभी के लिए शांति, प्रेम और दिव्य कृपा लेकर आए।", mantraTitle: "🕉️ साई गायत्री मंत्र", lyricsTitle: "📜 गीत", lyricsText: "ॐ सायेश्वराय विधमहे <br /> सत्यदेवाय धीमहि <br /> तन्न सर्वः प्रचोदयात् ॥", meaningTitle: "✨ अर्थ", meaningText: "“हम भगवान साईं का ध्यान करते हैं, जो सत्य और दिव्यता के प्रतीक हैं। वह परमात्मा हमारे बुद्धि को प्रकाशित करें।”", audioTitle: "🎵 ऑडियो", sheetTitle: "🎼 संगीत पत्रक", dashboardTitle: "🌼 लाइव जाप प्रगति", dashboardText: "समितियों द्वारा रिपोर्ट की गई गिनती (वास्तविक समय में अपडेट हो रही है):", cloudStatus: "लाइव", fetchingData: "लाइव डेटा प्राप्त किया जा रहा है...", totalChantsTitle: "🌹 कुल: {n}", progressText: "1 करोड़ लक्ष्य का {p}% पूरा हुआ", satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग", satsangText: "हम आपको मासिक 1 घंटे के ऑनलाइन सत्संग में शामिल होने का निमंत्रण देते हैं।", nextSession: "अगला सत्र: महीने का तीसरा रविवार शाम 6:00 बजे", linkInfo: "आपके समिति संयोजक द्वारा व्हाट्सएप पर बैठक लिंक साझा किया जाएगा।", galleryTitle: "📸 प्रोजेक्ट झलकियाँ", contactTitle: "📞 संपर्क करें", contactText: "यदि आप योगदान करना चाहते हैं:", adminTitle: "🛠️ क्लाउड प्रबंधन पोर्टल", adminSubtitle: "यहां दर्ज किए गए नंबर तुरंत क्लाउड डेटाबेस में भेजे जाते हैं।", selectTargetLabel: "समिति चुनें:", addNewOption: "+ नया समिति नाम जोड़ें", newNameLabel: "नया समिति नाम:", newNameInput: "उदा. बांद्रा समिति", countLabelAdd: "जोड़ने के लिए जाप:", countLabelNew: "प्रारंभिक जाप संख्या:", additionalCount: "नए जाप की संख्या दर्ज करें", cloudBtn: "डेटाबेस अपडेट करें ☁️", syncingBtn: "सिंक हो रहा है... ⏳", adminAccessBtn: "समन्वयक लॉगिन", chantsWord: "जाप", errorNum: "कृपया एक वैध संख्या दर्ज करें।", errorName: "समिति का नाम दर्ज करें", successAlert: "सफलता! वेबसाइट को अपडेट कर दिया गया है।", failAlert: "क्लाउड अपडेट विफल: ", pwPrompt: "पासवर्ड:"
       }
     };
 
-    // Mapping for default Samithi translations
     const dbTranslations = {
       "Kothapeta Samithi": { en: "Kothapeta Samithi", te: "కొత్తపేట సమితి", hi: "कोठापेटा समिति" },
       "Walkeshwar Samithi": { en: "Walkeshwar Samithi", te: "వాల్కేశ్వర్ సమితి", hi: "वॉकश्वर समिति" },
       "Worli Samithi": { en: "Worli Samithi", te: "వర్లి సమితి", hi: "वर्ली समिति" }
     };
 
-    function getTranslatedName(name, lang) {
-      return dbTranslations[name] ? dbTranslations[name][lang] : name;
+    function getTranslatedName(name, lang) { return dbTranslations[name] ? dbTranslations[name][lang] : name; }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.className = "show";
+      setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
     }
 
     // ==========================================
@@ -213,11 +262,7 @@
     database.ref('samithis').on('value', (snapshot) => {
       const data = snapshot.val();
       if (!data) {
-        database.ref('samithis').set({
-          "Kothapeta Samithi": 793371,
-          "Walkeshwar Samithi": 70818,
-          "Worli Samithi": 469099
-        });
+        database.ref('samithis').set({ "Kothapeta Samithi": 793371, "Walkeshwar Samithi": 70818, "Worli Samithi": 469099 });
         return;
       }
       localSamithiData = data;
@@ -225,14 +270,13 @@
     });
 
     // ==========================================
-    // UI RENDERING
+    // UI RENDERING & PROGRESS BAR
     // ==========================================
     function renderDashboardUI() {
       const list = document.getElementById('samithiList');
       const select = document.getElementById('samithiSelect');
       let total = 0;
       let sortableList = [];
-      
       const langDict = t[currentLang];
 
       for (let name in localSamithiData) sortableList.push({ name: name, count: localSamithiData[name] });
@@ -250,11 +294,15 @@
       });
 
       select.value = currentSelection || "NEW";
+      
+      // Update Total
       const totalEl = document.getElementById('totalChantsTitle');
       totalEl.innerText = langDict.totalChantsTitle.replace("{n}", total.toLocaleString());
       
-      totalEl.style.transform = "scale(1.05)";
-      setTimeout(() => totalEl.style.transform = "scale(1)", 300);
+      // Update Progress Bar
+      const percentage = Math.min((total / TARGET_GOAL) * 100, 100).toFixed(2);
+      document.getElementById('progressBar').style.width = percentage + "%";
+      document.getElementById('progressText').innerText = langDict.progressText.replace("{p}", percentage);
       
       toggleNewInput();
     }
@@ -267,12 +315,12 @@
       const select = document.getElementById('samithiSelect');
       const addVal = parseInt(document.getElementById('additionalCount').value);
       
-      if(isNaN(addVal) || addVal <= 0) return alert(langDict.errorNum);
+      if(isNaN(addVal) || addVal <= 0) { showToast(langDict.errorNum); return; }
 
       let targetName = "";
       if(select.value === "NEW") {
         const rawName = document.getElementById('newNameInput').value.trim();
-        if(!rawName) return alert(langDict.errorName);
+        if(!rawName) { showToast(langDict.errorName); return; }
         targetName = rawName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
       } else {
         targetName = select.value;
@@ -289,12 +337,12 @@
         btn.innerText = langDict.cloudBtn;
         btn.style.opacity = "1";
         if (error) {
-          alert(langDict.failAlert + error);
+          showToast(langDict.failAlert + error);
         } else if (committed) {
           document.getElementById('additionalCount').value = "";
           document.getElementById('newNameInput').value = "";
           toggleNewInput();
-          alert(langDict.successAlert);
+          showToast(langDict.successAlert);
         }
       });
     }
@@ -313,34 +361,28 @@
       currentLang = lang;
       const langDict = t[lang];
       
-      // Update all elements with matching IDs in the dictionary
       for (const key in langDict) {
         const el = document.getElementById(key);
         if (el) {
-          // If it is an input field, update the placeholder. Otherwise, update text.
-          if (el.tagName === 'INPUT') {
-            el.placeholder = langDict[key];
-          } else {
-            el.innerHTML = langDict[key];
-          }
+          if (el.tagName === 'INPUT') el.placeholder = langDict[key];
+          else el.innerHTML = langDict[key];
         }
       }
-      
       document.querySelectorAll('.language-option').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
-      
-      // If fetching isn't done, ensure fetching text is translated
-      if(Object.keys(localSamithiData).length === 0) {
-          document.getElementById('samithiList').innerText = langDict.fetchingData;
-      } else {
-          renderDashboardUI();
-      }
+      if(Object.keys(localSamithiData).length === 0) document.getElementById('samithiList').innerText = langDict.fetchingData;
+      else renderDashboardUI();
     }
 
     function toggleDarkMode() { document.body.classList.toggle('dark'); }
     function openModal(src) { document.getElementById('modalImg').src = src; document.getElementById('galleryModal').classList.add('active'); }
-    function showAdmin() { if(prompt(t[currentLang].pwPrompt) === "sai100") document.getElementById('adminPanel').classList.add('active'); }
+    function showAdmin() { 
+      const pass = prompt(t[currentLang].pwPrompt);
+      if(pass === "sai100") {
+        document.getElementById('adminPanel').classList.add('active');
+        showToast("Access Granted");
+      }
+    }
 
-    // Init translations mapping before loading data
     setLanguage('en');
   </script>
 </body>
