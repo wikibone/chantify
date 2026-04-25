@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Sai Gayathri Shatalaksha Arpan - A devotional offering of One Crore Sai Gayathri chants for Sri Sathya Sai Baba's Centenary year." />
   <title>1 Crore Sai Gayathri Chant Project</title>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
   <style>
     :root { --primary-color: #d35400; --secondary-color: #333; --background-color: #fdfdfd; --card-background: #fff; }
     body { font-family: "Verdana", sans-serif; background-color: var(--background-color); margin: 0; padding: 0; color: var(--secondary-color); font-size: 18px; line-height: 1.8; transition: background-color 0.3s, color 0.3s; }
@@ -21,12 +25,12 @@
     .left-col, .right-col { flex: 1 1 45%; background: var(--card-background); padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
     .sub-heading { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
     .lyrics { font-size: 1.4rem; text-align: center; line-height: 2.2; margin: 15px 0; }
-    .dashboard { max-width: 700px; margin: auto; border: 2px solid #ccc; border-radius: 10px; padding: 15px; background: var(--card-background); text-align: left; }
+    .dashboard { max-width: 700px; margin: auto; border: 2px solid #ccc; border-radius: 10px; padding: 15px; background: var(--card-background); text-align: left; position: relative;}
     .samithi { display: flex; justify-content: space-between; padding: 10px; background: var(--background-color); margin: 8px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
     .admin-panel { display: none; background: #fffde7; padding: 20px; border: 2px dashed #fbc02d; border-radius: 10px; margin: 20px auto; max-width: 700px; text-align: left; }
     .admin-panel.active { display: block; }
     input, select, .act-btn { padding: 12px; margin: 8px 0; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
-    .act-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; }
+    .act-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
     .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; padding: 10px; }
     .gallery img { width: 320px; height: 220px; object-fit: cover; cursor: pointer; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); border: 3px solid #f1f1f1; }
     .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
@@ -34,6 +38,8 @@
     .modal-content img { max-width: 90vw; max-height: 85vh; border-radius: 8px; }
     footer { text-align: center; padding: 20px; background-color: #eee; font-size: 0.9rem; }
     body.dark { --primary-color: #f39c12; --secondary-color: #f1f1f1; --background-color: #222; --card-background: #333; }
+    .live-dot { height: 10px; width: 10px; background-color: #2ecc71; border-radius: 50%; display: inline-block; margin-right: 8px; animation: blink 2s infinite; }
+    @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.4;} 100% {opacity: 1;} }
     @media (max-width: 768px) { .mantra-section { flex-direction: column; } .language-selector { position: static; justify-content: center; margin-top: 15px; } .toggle-darkmode { position: static; margin: 10px auto; } }
   </style>
 </head>
@@ -71,35 +77,35 @@
   </div>
 
   <div class="section">
-    <h2 id="dashboardTitle">🌼 Chanting Dashboard</h2>
-    <p id="dashboardText">Tally of chants reported by Samithis:</p>
-    <div class="dashboard" id="samithiList"></div>
+    <h2 id="dashboardTitle">🌼 Live Chanting Dashboard</h2>
+    <p id="dashboardText">Tally of chants reported by Samithis (Updating in real-time):</p>
+    <div class="dashboard">
+      <div style="text-align: right; font-size: 0.8rem; color: #2ecc71; margin-bottom: 10px;">
+        <span class="live-dot"></span>Cloud Connected
+      </div>
+      <div id="samithiList">Loading live data...</div>
+    </div>
     <h3 id="totalChantsTitle" style="margin-top: 20px; color: var(--primary-color);">🌹 Total: 0 chants so far!</h3>
-    <p id="countUpdateNote" style="font-style:italic; font-size:0.9rem; color:#888;">Count updated every month 23rd</p>
   </div>
 
   <div id="adminPanel" class="admin-panel">
-    <h3>🛠️ Update Chants (Additive Mode)</h3>
-    <p style="font-size: 0.85rem; color: #d35400;">The number you enter will be <strong>added</strong> to the current count.</p>
+    <h3>🛠️ Cloud Management Portal</h3>
+    <p style="font-size: 0.85rem; color: #d35400;">Changes made here instantly sync to all users globally.</p>
     
-    <label for="samithiSelect">Select Samithi:</label>
+    <label for="samithiSelect">Select Target:</label>
     <select id="samithiSelect" onchange="toggleNewInput()">
-      <option value="NEW">+ Add New Samithi</option>
+      <option value="NEW">+ Add New Samithi Name</option>
     </select>
     
     <div id="newNameGroup">
       <label>New Samithi Name:</label>
-      <input type="text" id="newNameInput" placeholder="e.g. Worli Samithi">
+      <input type="text" id="newNameInput" placeholder="e.g. Bandra Samithi">
     </div>
 
-    <label>Additional Chants to Add:</label>
+    <label id="countLabel">Chants to Add (Additive):</label>
     <input type="number" id="additionalCount" placeholder="0">
     
-    <button class="act-btn" onclick="processUpdate()">Update & Generate Save Code</button>
-    <hr>
-    <h4>Step 2: Permanent Save</h4>
-    <p style="font-size:0.75rem;">Copy the content below and paste it into GitHub index.html:</p>
-    <textarea id="outputCode" style="width:100%; height:80px; font-size:10px;" readonly onclick="this.select()"></textarea>
+    <button class="act-btn" onclick="pushToCloud()" id="cloudBtn">Update Live Database ☁️</button>
   </div>
 
   <div class="section">
@@ -133,88 +139,154 @@
 
   <footer>
     &copy; 2025-2026 ChantConnect.com | All Rights Reserved
-    <br><button onclick="showAdmin()" style="background:none; border:none; color:#ccc; font-size:0.7rem; cursor:pointer; margin-top:10px;">Admin</button>
+    <br><button onclick="showAdmin()" style="background:none; border:none; color:#ccc; font-size:0.7rem; cursor:pointer; margin-top:10px;">Coordinator Access</button>
   </footer>
 
   <script>
-    // --- PERSISTENT DATA ---
-    let samithiData = [
-      { name: "Kothapeta Samithi", count: 793371 },
-      { name: "Walkeshwar Samithi", count: 70818 },
-      { name: "Worli Samithi", count: 469099 }
-    ];
-
-    const translations = {
-      en: { title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", description: "A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.", blessing: "May the collective chants bring peace, love and divine grace to all.", mantraTitle: "🕉️ Sai Gayathri Mantra", lyricsTitle: "📜 Lyrics", lyricsText: "Om Sayeeshwaraya Vidhmahe <br /> Sathya Devaya Dheemahi <br /> Thannah Sarvah Prachodayaat", meaningTitle: "✨ Meaning", meaningText: "“We meditate on Lord Sai, who embodies Truth and Divinity. May that Supreme Being enlighten our intellect and guide us along the path of righteousness.”", audioTitle: "🎵 Audio", sheetTitle: "🎼 Music Sheet", dashboardTitle: "🌼 Chanting Dashboard", dashboardText: "Tally of chants reported by Samithis:", countUpdateNote: "Count would be updated every month 23rd", totalChantsTitle: "🌹 Total: {n} chants so far!", satsangTitle: "🕉️ Monthly Online Satsang", satsangText: "We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri chanting and bhajans.", nextSession: "Next Session:", linkInfo: "The meeting link will be shared via WhatsApp by your Samithi Convener.", galleryTitle: "📸 Project Glimpses", contactTitle: "📞 Contact Us", contactText: "If you would like to contribute or know more:" },
-      te: { title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!", description: "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంలో వారి దివ్య పాదాల వద్ద ఈ పవిత్ర జపయజ్ఞము ప్రేమతో అర్పిస్తున్నాము.", blessing: "సామూహిక జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం తీసుకురావాలని ఆకాంక్షిస్తూ...", mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం", lyricsTitle: "📜 మంత్రం", lyricsText: "ఓం సాయిశ్వారాయ విద్మహే <br /> సత్య దేవాయ ధీమహి <br /> తన్న సర్వః ప్రచోదయాత్ ॥", meaningTitle: "✨ అర్థం", meaningText: "“భగవాన్ శ్రీ సత్యసాయి బాబా సర్వోన్నత దైవ అవతారంగా ధ్యానిస్తాము. ఆ పరమాత్మ మన బుద్ధిని ప్రకాశింపజేయుగాక.”", audioTitle: "🎵 ఆడియో", sheetTitle: "🎼 సంగీతం", dashboardTitle: "🌼 జప సంఖ్య", dashboardText: "సమితులు నివేదించిన సంఖ్య:", countUpdateNote: "సంఖ్యని ప్రతి నెల 23వ తేదీన నవీకరిస్తారు", totalChantsTitle: "🌹 మొత్తం: {n} సార్లు!", satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్", satsangText: "సాయి గాయత్రి జపం కోసం ప్రతి నెల 1 గంట ఆన్‌లైన్ సత్సంగ్ లో పాల్గొనండి.", nextSession: "తదుపరి సమావేశం:", linkInfo: "మీ సమితి కన్వీనర్ ద్వారా మీటింగ్ లింక్ పంపబడుతుంది.", galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు", contactTitle: "📞 సంప్రదించండి", contactText: "మరింత తెలుసుకోవాలనుకుంటే:" },
-      hi: { title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", description: "भगवान श्री सत्य साईं बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर उनके दिव्य चरणों में यह पवित्र भक्ति प्रकल्प अर्पित है।", blessing: "सामूहिक जाप सभी के लिए शांति, प्रेम और दिव्य कृपा लेकर आए।", mantraTitle: "🕉️ साई गायत्री मंत्र", lyricsTitle: "📜 गीत", lyricsText: "ॐ सायेश्वराय विधमहे <br /> सत्यदेवाय धीमहि <br /> तन्न सर्वः प्रचोदयात् ॥", meaningTitle: "✨ अर्थ", meaningText: "“हम भगवान साईं का ध्यान करते हैं, जो सत्य और दिव्यता के प्रतीक हैं। वह परमात्मा हमारे बुद्धि को प्रकाशित करें।”", audioTitle: "🎵 ऑडियो", sheetTitle: "🎼 संगीत पत्रक", dashboardTitle: "🌼 जाप प्रगति", dashboardText: "समितियों द्वारा रिपोर्ट की गई गिनती:", countUpdateNote: "गिनती हर महीने 23 तारीख को अपडेट की जाएगी", totalChantsTitle: "🌹 कुल: {n} जाप!", satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग", satsangText: "हम आपको मासिक 1 घंटे के ऑनलाइन सत्संग में शामिल होने का निमंत्रण देते हैं।", nextSession: "अगला सत्र:", linkInfo: "आपके समिति संयोजक द्वारा व्हाट्सएप पर बैठक लिंक साझा किया जाएगा।", galleryTitle: "📸 प्रोजेक्ट झलकियाँ", contactTitle: "📞 संपर्क करें", contactText: "यदि आप योगदान करना चाहते हैं:" }
+    // ==========================================
+    // 🚨 PASTE YOUR FIREBASE CONFIG HERE 🚨
+    // ==========================================
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
-
+    
+    // Initialize Google Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    
+    let localSamithiData = {};
     let currentLang = 'en';
 
-    function renderDashboard() {
+    // Translations Dictionary
+    const translations = {
+      en: { title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", mantraTitle: "🕉️ Sai Gayathri Mantra", dashboardTitle: "🌼 Live Chanting Dashboard", totalChantsTitle: "🌹 Total: {n} chants so far!", satsangTitle: "🕉️ Monthly Online Satsang", galleryTitle: "📸 Project Glimpses", contactTitle: "📞 Contact Us" },
+      te: { title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!", mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం", dashboardTitle: "🌼 ప్రత్యక్ష జప సంఖ్య", totalChantsTitle: "🌹 మొత్తం: {n} సార్లు!", satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్", galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు", contactTitle: "📞 సంప్రదించండి" },
+      hi: { title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", mantraTitle: "🕉️ साई गायत्री मंत्र", dashboardTitle: "🌼 लाइव जाप प्रगति", totalChantsTitle: "🌹 कुल: {n} जाप!", satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग", galleryTitle: "📸 प्रोजेक्ट झलकियाँ", contactTitle: "📞 संपर्क करें" }
+    };
+
+    // ==========================================
+    // REAL-TIME CLOUD LISTENER
+    // ==========================================
+    // This function automatically runs anytime the database changes anywhere in the world!
+    database.ref('samithis').on('value', (snapshot) => {
+      const data = snapshot.val();
+      
+      // If database is completely empty (first run), let's push your initial data
+      if (!data) {
+        database.ref('samithis').set({
+          "Kothapeta Samithi": 793371,
+          "Walkeshwar Samithi": 70818,
+          "Worli Samithi": 469099
+        });
+        return;
+      }
+      
+      localSamithiData = data;
+      renderDashboardUI();
+    });
+
+    // ==========================================
+    // UI RENDERING
+    // ==========================================
+    function renderDashboardUI() {
       const list = document.getElementById('samithiList');
       const select = document.getElementById('samithiSelect');
       let total = 0;
       
-      list.innerHTML = "";
-      select.innerHTML = '<option value="NEW">+ Add New Samithi</option>';
+      // Convert Firebase Object to Array for sorting
+      let sortableList = [];
+      for (let name in localSamithiData) {
+        sortableList.push({ name: name, count: localSamithiData[name] });
+      }
       
-      samithiData.forEach((item, index) => {
+      // Sort Data Descending by count
+      sortableList.sort((a, b) => b.count - a.count);
+
+      list.innerHTML = "";
+      const currentSelection = select.value;
+      select.innerHTML = '<option value="NEW">+ Add New Samithi Name</option>';
+      
+      sortableList.forEach((item) => {
         total += item.count;
-        list.innerHTML += `<div class="samithi"><span><strong>${item.name}</strong></span><span>${item.count.toLocaleString()}</span></div>`;
-        select.innerHTML += `<option value="${index}">${item.name}</option>`;
+        list.innerHTML += `<div class="samithi"><span><strong>${item.name}</strong></span><span>${item.count.toLocaleString()} chants</span></div>`;
+        select.innerHTML += `<option value="${item.name}">${item.name}</option>`;
       });
 
+      select.value = currentSelection || "NEW";
       const totalTxt = translations[currentLang].totalChantsTitle.replace("{n}", total.toLocaleString());
       document.getElementById('totalChantsTitle').innerText = totalTxt;
-      document.getElementById('outputCode').value = document.documentElement.outerHTML;
     }
 
-    function processUpdate() {
+    // ==========================================
+    // CLOUD DATABASE UPDATE FUNCTION
+    // ==========================================
+    function pushToCloud() {
       const select = document.getElementById('samithiSelect');
-      const addVal = parseInt(document.getElementById('additionalCount').value) || 0;
+      const addVal = parseInt(document.getElementById('additionalCount').value);
+      
+      if(isNaN(addVal)) return alert("Please enter a valid number of chants.");
+
+      let targetName = "";
 
       if(select.value === "NEW") {
         const rawName = document.getElementById('newNameInput').value.trim();
         if(!rawName) return alert("Enter Samithi Name");
-        // Normalization to prevent duplicates
-        const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-        const existing = samithiData.find(s => s.name.toLowerCase() === rawName.toLowerCase());
-        if(existing) {
-          existing.count += addVal;
-        } else {
-          samithiData.push({ name: formattedName, count: addVal });
-        }
+        // Title Case formatting
+        targetName = rawName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
       } else {
-        samithiData[select.value].count += addVal;
+        targetName = select.value;
       }
       
-      renderDashboard();
-      alert("Update Successful! Copy code from Step 2 to save.");
+      const btn = document.getElementById('cloudBtn');
+      btn.innerText = "Syncing... ⏳";
+      
+      // This is an Elite "Transaction" - It reads the current cloud value and adds to it securely
+      const samithiRef = database.ref('samithis/' + targetName);
+      
+      samithiRef.transaction((currentCount) => {
+        return (currentCount || 0) + addVal;
+      }, (error, committed, snapshot) => {
+        if (error) {
+          alert("Cloud Update Failed: " + error);
+        } else if (committed) {
+          document.getElementById('additionalCount').value = "";
+          document.getElementById('newNameInput').value = "";
+          toggleNewInput();
+          alert("Success! The live website has been updated globally.");
+        }
+        btn.innerText = "Update Live Database ☁️";
+      });
     }
 
+    // ==========================================
+    // HELPERS & UI TOGGLES
+    // ==========================================
     function toggleNewInput() {
-      document.getElementById('newNameGroup').style.display = (document.getElementById('samithiSelect').value === "NEW") ? 'block' : 'none';
+      const isNew = document.getElementById('samithiSelect').value === "NEW";
+      document.getElementById('newNameGroup').style.display = isNew ? 'block' : 'none';
+      document.getElementById('countLabel').innerText = isNew ? "Initial Chant Count:" : "Chants to Add (Additive):";
     }
 
     function setLanguage(lang) {
       currentLang = lang;
       const t = translations[lang];
       for (const key in t) {
-        const el = document.getElementById(key);
-        if (el) el.innerHTML = t[key];
+        if (document.getElementById(key)) document.getElementById(key).innerText = t[key];
       }
       document.querySelectorAll('.language-option').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
-      renderDashboard();
+      renderDashboardUI();
     }
 
     function toggleDarkMode() { document.body.classList.toggle('dark'); }
     function openModal(src) { document.getElementById('modalImg').src = src; document.getElementById('galleryModal').classList.add('active'); }
     function showAdmin() { if(prompt("Password:") === "sai100") document.getElementById('adminPanel').classList.add('active'); }
 
-    // Init
-    renderDashboard();
     toggleNewInput();
   </script>
 </body>
