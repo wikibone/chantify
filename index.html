@@ -3,155 +3,208 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Sai Gayathri Shatalaksha Arpan - A devotional offering for Sri Sathya Sai Baba's Centenary year." />
+  <meta name="description" content="Sai Gayathri Shatalaksha Arpan - A devotional offering of One Crore Sai Gayathri chants for Sri Sathya Sai Baba's Centenary year." />
   <title>1 Crore Sai Gayathri Chant Project</title>
   <style>
     :root { --primary-color: #d35400; --secondary-color: #333; --background-color: #fdfdfd; --card-background: #fff; }
     body { font-family: "Verdana", sans-serif; background-color: var(--background-color); margin: 0; padding: 0; color: var(--secondary-color); font-size: 18px; line-height: 1.8; transition: background-color 0.3s; }
     header { background-color: var(--primary-color); color: white; text-align: center; padding: 30px 20px; position: relative; }
+    header h1 { margin: 0; font-size: 2rem; }
+    header h2 { margin: 10px 0; font-size: 1.3rem; font-weight: bold; color: #fff; }
+    .language-selector { position: absolute; top: 10px; right: 20px; display: flex; gap: 15px; }
+    .language-option { cursor: pointer; padding: 6px 10px; border-radius: 5px; background: rgba(255,255,255,0.7); color: var(--primary-color); font-weight: bold; }
+    .language-option.active { background: white; border: 2px solid #a64b00; }
     .section { padding: 30px 20px; text-align: center; border-bottom: 1px solid #ddd; }
     h2 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.5rem; }
+    .mantra-section { display: flex; flex-wrap: wrap; max-width: 1000px; margin: auto; justify-content: space-between; gap: 20px; text-align: left; }
+    .left-col, .right-col { flex: 1 1 45%; background: var(--card-background); padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .sub-heading { font-size: 1.3rem; color: var(--primary-color); border-bottom: 1px solid #ccc; margin-bottom: 10px; }
+    .lyrics { font-size: 1.4rem; text-align: center; line-height: 2.2; }
+    .music-sheet img { max-width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
     .dashboard { max-width: 700px; margin: auto; border: 2px solid #ccc; border-radius: 10px; padding: 15px; background: var(--card-background); text-align: left; }
-    .samithi { display: flex; justify-content: space-between; padding: 12px; background: #f9f9f9; margin: 8px 0; border-radius: 8px; border: 1px solid #eee; }
-    .samithi strong { color: var(--primary-color); }
-    .btn-admin { background: none; border: none; color: #888; cursor: pointer; text-decoration: underline; font-size: 0.8rem; }
+    .samithi { display: flex; justify-content: space-between; padding: 10px; background: #f9f9f9; margin: 8px 0; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
+    .samithi:hover { border: 1px solid var(--primary-color); background: #fff3e0; }
     .admin-panel { display: none; background: #fffde7; padding: 20px; border: 2px dashed #fbc02d; border-radius: 10px; margin: 20px auto; max-width: 700px; text-align: left; }
     .admin-panel.active { display: block; }
-    input, button.action-btn { padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; }
-    button.action-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; }
     .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .gallery img { width: 300px; height: 200px; object-fit: cover; border-radius: 10px; cursor: pointer; }
-    footer { text-align: center; padding: 30px; background: #eee; font-size: 0.9rem; }
-    body.dark { --primary-color: #f39c12; --background-color: #222; --card-background: #333; color: #f1f1f1; }
-    .language-selector { position: absolute; top: 10px; right: 20px; display: flex; gap: 10px; }
-    .language-option { cursor: pointer; padding: 5px 10px; background: rgba(255,255,255,0.8); color: #d35400; border-radius: 4px; font-weight: bold; }
-    @media (max-width: 768px) { .language-selector { position: static; margin-top: 10px; justify-content: center; } }
+    .gallery img { width: 320px; height: 220px; object-fit: cover; border-radius: 12px; border: 3px solid #f1f1f1; }
+    footer { text-align: center; padding: 20px; background-color: #eee; font-size: 0.9rem; }
+    input, button.act-btn { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; border-radius: 5px; border: 1px solid #ccc; }
+    button.act-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; }
+    @media (max-width: 768px) { .mantra-section { flex-direction: column; } .language-selector { position: static; justify-content: center; margin-bottom: 10px; } }
   </style>
 </head>
-<body id="body">
+<body>
 
   <header>
     <div class="language-selector">
-      <span class="language-option" onclick="setLanguage('en')">English</span>
+      <span class="language-option active" onclick="setLanguage('en')">English</span>
       <span class="language-option" onclick="setLanguage('te')">తెలుగు</span>
       <span class="language-option" onclick="setLanguage('hi')">हिंदी</span>
     </div>
     <h1 id="title">🌸 Sai Gayathri Shatalaksha Arpan 🌸</h1>
     <h2 id="tagline">Offering of One Crore Sai Gayathri Chants</h2>
-    <p id="description">Dedicated to Bhagawan Sri Sathya Sai Baba's Centenary year.</p>
+    <p id="description">A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.</p>
+    <p id="blessing"><em>May the collective chants bring peace, love and divine grace to all.</em></p>
   </header>
 
   <div class="section">
-    <h2 id="dashboardTitle">🌼 Chanting Dashboard</h2>
-    <div class="dashboard" id="samithiList">
+    <h2 id="mantraTitle">🕉️ Sai Gayathri Mantra</h2>
+    <div class="mantra-section">
+      <div class="left-col">
+        <div class="sub-heading" id="lyricsTitle">📜 Lyrics</div>
+        <p class="lyrics" id="lyricsText">Om Sayeeshwaraya Vidhmahe <br /> Sathya Devaya Dheemahi <br /> Thannah Sarvah Prachodayaat</p>
+        <div class="sub-heading" id="meaningTitle">✨ Meaning</div>
+        <p id="meaningText">“We meditate on Lord Sai, who embodies Truth and Divinity. May that Supreme Being enlighten our intellect and guide us along the path of righteousness.”</p>
       </div>
-    <h3 id="totalDisplay" style="margin-top: 20px; color: var(--primary-color);">🌹 Total: 0 chants</h3>
-    <p style="font-size: 0.8rem; color: #666;">Counts updated monthly on the 23rd.</p>
+      <div class="right-col">
+        <div class="sub-heading" id="audioTitle">🎵 Audio</div>
+        <audio controls style="width:100%"><source src="sai-gayathri.mp3" type="audio/mpeg"></audio>
+        <div class="sub-heading" id="sheetTitle">🎼 Music Sheet</div>
+        <div class="music-sheet"><img src="sai-gayatri-sheet.jpg" alt="Music Sheet"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 id="dashboardTitle">🌼 Chanting Dashboard</h2>
+    <p id="dashboardText">Tally of chants reported by Samithis (Click a name to update):</p>
+    <div class="dashboard" id="samithiContainer"></div>
+    <h3 id="totalChantsTitle" style="margin-top: 20px; color: var(--primary-color);">🌹 Total: 0 chants so far!</h3>
+    <p class="count-update-note" id="countUpdateNote" style="font-style: italic; font-size: 0.9rem; color: #666;">Count updated every month 23rd</p>
   </div>
 
   <div id="adminPanel" class="admin-panel">
-    <h3>🛠️ Management Portal</h3>
-    <p>Logged in as: <strong>Coordinator</strong></p>
+    <h3 id="adminHeader">🛠️ Update Samithi: None selected</h3>
+    <input type="hidden" id="editIndex">
+    <input type="text" id="inputName" placeholder="Samithi Name">
+    <input type="number" id="inputCount" placeholder="Chant Count">
+    <button class="act-btn" onclick="saveEntry()">Save / Add Entry</button>
+    <p style="font-size:0.75rem; margin-top:10px;">To delete a Samithi, set its count to 0.</p>
     <hr>
-    <h4>Add New Samithi</h4>
-    <input type="text" id="newName" placeholder="Samithi Name (e.g. Mumbai Samithi)">
-    <input type="number" id="newCount" placeholder="Initial Chant Count">
-    <button class="action-btn" onclick="addSamithi()">Add to List</button>
-    
-    <h4 style="margin-top:20px;">Save Changes</h4>
-    <p style="font-size:0.8rem;">After adding/updating, copy the code below and paste it into your <strong>index.html</strong> file in GitHub to save permanently.</p>
-    <textarea id="outputCode" style="width:100%; height:100px; font-family:monospace; font-size:12px;"></textarea>
+    <h4>Step 2: Permanent Save</h4>
+    <p style="font-size:0.8rem;">Copy everything in this box and paste into GitHub index.html:</p>
+    <textarea id="outputCode" style="width:100%; height:80px; font-size:10px;" readonly onclick="this.select()"></textarea>
+  </div>
+
+  <div class="section">
+    <h2 id="satsangTitle">🕉️ Monthly Online Satsang</h2>
+    <p id="satsangText">We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri chanting and bhajans.</p>
+    <p><strong>Next Session:</strong> 3rd Sunday of the month 6:00 PM IST</p>
+    <p id="linkInfo">The meeting link will be shared via WhatsApp by your Samithi Convener.</p>
   </div>
 
   <div class="section">
     <h2 id="galleryTitle">📸 Project Glimpses</h2>
     <div class="gallery">
-      <img src="photo1.jpg" alt="Moment 1">
-      <img src="photo2.jpg" alt="Moment 2">
-      <img src="photo3.jpg" alt="Moment 3">
+      <img src="photo1.jpg" alt="Photo 1">
+      <img src="photo2.jpg" alt="Photo 2">
+      <img src="photo3.jpg" alt="Photo 3">
+      <img src="photo4.jpg" alt="Photo 4">
+      <img src="photo5.jpg" alt="Photo 5">
     </div>
   </div>
 
   <div class="section">
     <h2 id="contactTitle">📞 Contact Us</h2>
-    <p>Email: <a href="mailto:chantconnect@gmail.com">chantconnect@gmail.com</a></p>
+    <a href="mailto:chantconnect@gmail.com" style="display:block; color:var(--primary-color);">✉️ Email: chantconnect@gmail.com</a>
+    <a href="https://chantconnect.com" style="display:block; color:var(--primary-color); margin-top:10px;">🌐 Website: chantconnect.com</a>
   </div>
 
   <footer>
-    &copy; 2025-2026 ChantConnect.com | 
-    <button class="btn-admin" onclick="login()">🔒 Admin Login</button>
+    &copy; 2025-2026 ChantConnect.com | All Rights Reserved
+    <div style="margin-top:10px; font-size:0.8rem; color:#888;">
+      <em>Disclaimer: This project is for spiritual inspiration only and has no commercial intent.</em>
+    </div>
+    <button onclick="login()" style="background:none; border:none; color:#ccc; cursor:pointer; font-size:0.7rem;">Admin Access</button>
   </footer>
 
   <script>
-    // --- DATA SECTION: This is what the "Robot" updates ---
-    let projectData = [
+    // --- THIS DATA BLOCK IS WHAT YOU EDIT VIA THE DASHBOARD ---
+    let samithiData = [
       { name: "Kothapeta Samithi", count: 793371 },
       { name: "Walkeshwar Samithi", count: 70818 },
       { name: "Worli Samithi", count: 469099 }
     ];
 
     const translations = {
-      en: { title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", dashboardTitle: "🌼 Chanting Dashboard" },
-      te: { title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి!", dashboardTitle: "🌼 జప సంఖ్య" },
-      hi: { title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", dashboardTitle: "🌼 जाप प्रगति" }
+      en: { title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", mantraTitle: "🕉️ Sai Gayathri Mantra", dashboardTitle: "🌼 Chanting Dashboard", satsangTitle: "🕉️ Monthly Online Satsang", galleryTitle: "📸 Project Glimpses", contactTitle: "📞 Contact Us" },
+      te: { title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి!", mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం", dashboardTitle: "🌼 జప సంఖ్య", satsangTitle: "🕉️ నెలవారీ సత్సంగ్", galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు", contactTitle: "📞 సంప్రదించండి" },
+      hi: { title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", mantraTitle: "🕉️ साई गायत्री मंत्र", dashboardTitle: "🌼 जाप प्रगति", satsangTitle: "🕉️ मासिक सत्संग", galleryTitle: "📸 झलकियाँ", contactTitle: "📞 संपर्क करें" }
     };
 
-    function renderDashboard() {
-      const list = document.getElementById('samithiList');
+    function render() {
+      const container = document.getElementById('samithiContainer');
       let total = 0;
-      list.innerHTML = "";
+      container.innerHTML = "";
       
-      projectData.forEach((item, index) => {
-        total += item.count;
-        list.innerHTML += `
-          <div class="samithi">
-            <span><strong>${item.name}</strong></span>
-            <span>${item.count.toLocaleString()} chants</span>
-          </div>
-        `;
+      samithiData.forEach((item, index) => {
+        if(item.count > 0) {
+          total += item.count;
+          container.innerHTML += `
+            <div class="samithi" onclick="editSamithi(${index})">
+              <span><strong>${item.name}</strong></span>
+              <span>${item.count.toLocaleString()} chants</span>
+            </div>
+          `;
+        }
       });
       
-      document.getElementById('totalDisplay').innerText = `🌹 Total: ${total.toLocaleString()} chants so far!`;
-      updateSaveCode();
+      document.getElementById('totalChantsTitle').innerText = `🌹 Total: ${total.toLocaleString()} chants so far!`;
+      document.getElementById('outputCode').value = document.documentElement.outerHTML;
     }
 
-    function addSamithi() {
-      const name = document.getElementById('newName').value;
-      const count = parseInt(document.getElementById('newCount').value);
-      if(name && count) {
-        projectData.push({ name: name, count: count });
-        renderDashboard();
-        document.getElementById('newName').value = "";
-        document.getElementById('newCount').value = "";
+    function editSamithi(index) {
+      if(document.getElementById('adminPanel').style.display !== 'block') return;
+      const item = samithiData[index];
+      document.getElementById('adminHeader').innerText = "🛠️ Updating: " + item.name;
+      document.getElementById('inputName').value = item.name;
+      document.getElementById('inputCount').value = item.count;
+      document.getElementById('editIndex').value = index;
+    }
+
+    function saveEntry() {
+      const name = document.getElementById('inputName').value;
+      const count = parseInt(document.getElementById('inputCount').value);
+      const editIndex = document.getElementById('editIndex').value;
+
+      if(!name) return alert("Enter a name");
+
+      // Check if name already exists (if we aren't editing an existing one)
+      const existingIdx = samithiData.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+      
+      if(editIndex !== "" && editIndex !== null) {
+        samithiData[editIndex] = { name, count };
+      } else if (existingIdx > -1) {
+        samithiData[existingIdx].count = count; // Update existing instead of duplicate
       } else {
-        alert("Please enter both name and count");
+        samithiData.push({ name, count }); // Add new
       }
-    }
 
-    function updateSaveCode() {
-      const fullCode = document.documentElement.outerHTML;
-      // We find the projectData array in the code and update it for the user to copy-paste
-      document.getElementById('outputCode').value = "Copy all code from your browser (Ctrl+A) and paste it back to GitHub index.html";
+      document.getElementById('inputName').value = "";
+      document.getElementById('inputCount').value = "";
+      document.getElementById('editIndex').value = "";
+      document.getElementById('adminHeader').innerText = "🛠️ Entry Saved! Add another or copy code below.";
+      render();
     }
 
     function login() {
-      const pass = prompt("Enter Admin Password:");
-      if(pass === "sai100") {
+      if(prompt("Admin Password:") === "sai100") {
         document.getElementById('adminPanel').classList.add('active');
-        alert("Access Granted. You can now add Samithis below.");
-      } else {
-        alert("Incorrect password.");
+        document.getElementById('adminHeader').innerText = "🛠️ Click a Samithi name above to edit, or type below to add new.";
       }
     }
 
     function setLanguage(lang) {
-      document.getElementById('title').innerText = translations[lang].title;
-      document.getElementById('tagline').innerText = translations[lang].tagline;
-      document.getElementById('dashboardTitle').innerText = translations[lang].dashboardTitle;
+      const t = translations[lang];
+      for (const key in t) {
+        if(document.getElementById(key)) document.getElementById(key).innerText = t[key];
+      }
+      document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
+      event.target.classList.add('active');
     }
 
-    // Initialize
-    renderDashboard();
+    render();
   </script>
 </body>
 </html>
