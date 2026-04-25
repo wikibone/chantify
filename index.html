@@ -1,670 +1,157 @@
-<!--
-Fixes:
-- Move misplaced <div class="section">, <h2 id="galleryTitle">, <p id="galleryText">, and <div class="gallery"> wrapping, so that the gallery section is not nested incorrectly.
-- Make sure the "Contact" section and the footer are not inside the gallery or modal.
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Sai Gayathri Shatalaksha Arpan - A devotional offering of One Crore Sai Gayathri chants for Sri Sathya Sai Baba's Centenary year."
-  />
+  <meta name="description" content="Sai Gayathri Shatalaksha Arpan - A devotional offering for Sri Sathya Sai Baba's Centenary year." />
   <title>1 Crore Sai Gayathri Chant Project</title>
   <style>
-    :root {
-      --primary-color: #d35400;
-      /* saffron */
-      --secondary-color: #333;
-      --background-color: #fdfdfd;
-      --card-background: #fff;
-    }
-    body {
-      font-family: "Verdana", sans-serif;
-      background-color: var(--background-color);
-      margin: 0;
-      padding: 0;
-      color: var(--secondary-color);
-      font-size: 18px;
-      line-height: 1.8;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    header {
-      background-color: var(--primary-color);
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      position: relative;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    header h2 {
-      margin: 10px 0;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #fff;
-      /* always white */
-    }
-    header p {
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-
-    /* Language selector top banner */
-    .language-selector {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      display: flex;
-      gap: 15px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      user-select:none;
-    }
-    .language-option {
-      cursor: pointer;
-      padding: 6px 10px;
-      border-radius: 5px;
-      background: rgba(255 255 255 / 0.7);
-      color: var(--primary-color);
-      transition: background-color 0.3s, color 0.3s;
-      border: 2px solid transparent;
-      white-space: nowrap;
-    }
-    .language-option:hover,
-    .language-option.active {
-      background: white;
-      color: var(--primary-color);
-      border: 2px solid #a64b00;
-    }
-
-    /* Toggle Button */
-    button.toggle-darkmode {
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      width: 36px;
-      height: 36px;
-      border: none;
-      border-radius: 50%;
-      background-color: rgba(255 255 255 / 0.7);
-      cursor: pointer;
-      font-size: 18px;
-      color: var(--primary-color);
-      user-select:none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s;
-    }
-    button.toggle-darkmode:hover {
-      background-color: white;
-    }
-
-    .section {
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-    h2 {
-      color: var(--primary-color);
-      margin-bottom: 15px;
-      font-size: 1.5rem;
-    }
-    /* Sai Gayatri Layout */
-    .mantra-section {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 1000px;
-      margin: auto;
-      justify-content: space-between;
-      gap: 20px;
-      text-align: left;
-    }
-    .left-col,
-    .right-col {
-      flex: 1 1 45%;
-      background: var(--card-background);
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    .sub-heading {
-      font-size: 1.3rem;
-      color: var(--primary-color);
-      margin-bottom: 10px;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 5px;
-    }
-    .lyrics {
-      font-size: 1.4rem;
-      text-align: center;
-      line-height: 2.2;
-      margin: 15px 0;
-    }
-    audio {
-      width: 100%;
-      max-width: 400px;
-      display: block;
-      margin: auto;
-    }
-    .music-sheet {
-      margin-top: 20px;
-      text-align: center;
-    }
-    .music-sheet img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    /* Dashboard */
-    .dashboard {
-      max-width: 700px;
-      margin: auto;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      background: var(--card-background);
-      text-align: left;
-      font-size: 1.1rem;
-    }
-    .samithi {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px;
-      background: var(--background-color);
-      margin: 8px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    .count-update-note {
-      font-style: italic;
-      font-size: 0.95rem;
-      margin-top: 8px;
-      color: #555;
-      text-align: right;
-    }
-    /* Gallery */
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 28px;
-      padding: 10px;
-    }
-    .gallery img {
-      width: 320px;
-      max-width: 100%;
-      height: 220px;
-      object-fit: cover;
-      cursor: pointer;
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-      border: 3px solid #f1f1f1;
-      transition: box-shadow 0.2s;
-    }
-    .gallery img:hover {
-      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-    }
-    /* Lightbox modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0; top: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      overflow: auto; /* Allow scrolling if image is too large */
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      position: relative;
-      padding: 10px;
-      max-width: 98vw;
-      max-height: 96vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content img {
-      width: auto;
-      height: auto;
-      max-width: 98vw;
-      max-height: 92vh;
-      object-fit: contain;
-      border-radius: 6px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-      background: #fff;
-      display: block;
-    }
-    .modal-close {
-      position: absolute;
-      top: 7px;
-      right: 17px;
-      font-size: 2.4rem;
-      color: #d35400;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    /* Responsive */
-    @media (max-width:650px){
-      .gallery img { width: 98vw; height: 170px;}
-      .modal-content img {
-        max-width: 98vw;
-        max-height: 80vh;
-      }
-    }
-
-    /* Contact */
-    .contact a {
-      display: block;
-      margin: 10px 0;
-      color: var(--primary-color);
-      text-decoration: none;
-      font-size: 1.1rem;
-    }
-    .contact a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #eee;
-      font-size: 0.9rem;
-    }
-    /* Dark Mode */
-    body.dark {
-      --primary-color: #f39c12;
-      --secondary-color: #f1f1f1;
-      --background-color: #222;
-      --card-background: #333;
-      background-color: #222;
-      color: #f1f1f1;
-    }
-    body.dark header {
-      background: #8e44ad;
-    }
-    body.dark footer {
-      background-color: #444;
-    }
-    /* Responsive */
-    @media (max-width: 768px) {
-      .mantra-section {
-        flex-direction: column;
-      }
-      header h1 {
-        font-size: 1.6rem;
-      }
-      header h2 {
-        font-size: 1.1rem;
-      }
-      h2 {
-        font-size: 1.3rem;
-      }
-      .samithi {
-        flex-direction: column;
-        text-align: left;
-      }
-      .language-selector {
-        position: static;
-        justify-content: center;
-        margin-bottom: 15px;
-        gap: 10px;
-      }
-      button.toggle-darkmode {
-        position: static;
-        margin-bottom: 15px;
-        width: auto;
-        height: auto;
-        padding: 6px 12px;
-        font-size: 1.2rem;
-        border-radius: 6px;
-      }
-    }
+    :root { --primary-color: #d35400; --secondary-color: #333; --background-color: #fdfdfd; --card-background: #fff; }
+    body { font-family: "Verdana", sans-serif; background-color: var(--background-color); margin: 0; padding: 0; color: var(--secondary-color); font-size: 18px; line-height: 1.8; transition: background-color 0.3s; }
+    header { background-color: var(--primary-color); color: white; text-align: center; padding: 30px 20px; position: relative; }
+    .section { padding: 30px 20px; text-align: center; border-bottom: 1px solid #ddd; }
+    h2 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.5rem; }
+    .dashboard { max-width: 700px; margin: auto; border: 2px solid #ccc; border-radius: 10px; padding: 15px; background: var(--card-background); text-align: left; }
+    .samithi { display: flex; justify-content: space-between; padding: 12px; background: #f9f9f9; margin: 8px 0; border-radius: 8px; border: 1px solid #eee; }
+    .samithi strong { color: var(--primary-color); }
+    .btn-admin { background: none; border: none; color: #888; cursor: pointer; text-decoration: underline; font-size: 0.8rem; }
+    .admin-panel { display: none; background: #fffde7; padding: 20px; border: 2px dashed #fbc02d; border-radius: 10px; margin: 20px auto; max-width: 700px; text-align: left; }
+    .admin-panel.active { display: block; }
+    input, button.action-btn { padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; }
+    button.action-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; }
+    .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .gallery img { width: 300px; height: 200px; object-fit: cover; border-radius: 10px; cursor: pointer; }
+    footer { text-align: center; padding: 30px; background: #eee; font-size: 0.9rem; }
+    body.dark { --primary-color: #f39c12; --background-color: #222; --card-background: #333; color: #f1f1f1; }
+    .language-selector { position: absolute; top: 10px; right: 20px; display: flex; gap: 10px; }
+    .language-option { cursor: pointer; padding: 5px 10px; background: rgba(255,255,255,0.8); color: #d35400; border-radius: 4px; font-weight: bold; }
+    @media (max-width: 768px) { .language-selector { position: static; margin-top: 10px; justify-content: center; } }
   </style>
 </head>
-<body>
-  <!-- Controls -->
+<body id="body">
+
   <header>
-    <button
-      class="toggle-darkmode"
-      aria-label="Toggle dark and light mode"
-      title="Toggle Dark/Light Mode"
-      onclick="toggleDarkMode()"
-    >
-      🌗
-    </button>
-    <nav
-      class="language-selector"
-      role="navigation"
-      aria-label="Language selection"
-      aria-live="polite"
-    >
-      <span
-        class="language-option active"
-        tabindex="0"
-        data-lang="en"
-        aria-current="true"
-        role="link"
-        aria-label="Switch to English"
-        onclick="setLanguage('en')"
-        onkeypress="if(event.key==='Enter'){ setLanguage('en'); }"
-        >English</span
-      >
-      <span
-        class="language-option"
-        tabindex="0"
-        data-lang="te"
-        role="link"
-        aria-label="Switch to Telugu"
-        onclick="setLanguage('te')"
-        onkeypress="if(event.key==='Enter'){ setLanguage('te'); }"
-        >తెలుగు</span
-      >
-      <span
-        class="language-option"
-        tabindex="0"
-        data-lang="hi"
-        role="link"
-        aria-label="Switch to Hindi"
-        onclick="setLanguage('hi')"
-        onkeypress="if(event.key==='Enter'){ setLanguage('hi'); }"
-        >हिंदी</span
-      >
-    </nav>
+    <div class="language-selector">
+      <span class="language-option" onclick="setLanguage('en')">English</span>
+      <span class="language-option" onclick="setLanguage('te')">తెలుగు</span>
+      <span class="language-option" onclick="setLanguage('hi')">हिंदी</span>
+    </div>
     <h1 id="title">🌸 Sai Gayathri Shatalaksha Arpan 🌸</h1>
     <h2 id="tagline">Offering of One Crore Sai Gayathri Chants</h2>
-    <p id="description">
-      A sacred devotional project lovingly dedicated at the divine lotus feet of
-      Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.
-    </p>
-    <p id="blessing">
-      <em>May the collective chants bring peace, love and divine grace to all.</em>
-    </p>
+    <p id="description">Dedicated to Bhagawan Sri Sathya Sai Baba's Centenary year.</p>
   </header>
-  <!-- Sai Gayathri Mantra Section -->
-  <div class="section">
-    <h2 id="mantraTitle">🕉️ Sai Gayathri Mantra</h2>
-    <div class="mantra-section">
-      <div class="left-col">
-        <div class="sub-heading" id="lyricsTitle">📜 Lyrics</div>
-        <p class="lyrics" id="lyricsText">
-          Om Sayeeshwaraya Vidhmahe <br />
-          Sathya Devaya Dheemahi <br />
-          Thannah Sarvah Prachodayaat
-        </p>
-        <div class="sub-heading" id="meaningTitle">✨ Meaning</div>
-        <p id="meaningText">
-          “We meditate on Lord Sai, who embodies Truth and Divinity.
-          May that Supreme Being enlighten our intellect and guide us along
-          the path of righteousness.”
-        </p>
-      </div>
-      <div class="right-col">
-        <div class="sub-heading" id="audioTitle">🎵 Audio</div>
-        <audio controls>
-          <source src="sai-gayathri.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-        <div class="sub-heading" id="sheetTitle">🎼 Music Sheet</div>
-        <div class="music-sheet">
-          <img
-            src="sai-gayatri-sheet.jpg"
-            alt="Sai Gayatri Music Sheet"
-            id="sheetImage"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Dashboard -->
+
   <div class="section">
     <h2 id="dashboardTitle">🌼 Chanting Dashboard</h2>
-    <p id="dashboardText">Tally of chants reported by Samithis:</p>
-    <div class="dashboard" aria-live="polite" aria-relevant="all">
-      <div class="samithi">
-        <span><strong id="samithi1Name">Kothapeta Samithi</strong></span>
-        <span id="samithi1Count">7,93,371 chants</span>
+    <div class="dashboard" id="samithiList">
       </div>
-      <div class="samithi">
-        <span><strong id="samithi2Name">Walkeshwar Samithi</strong></span>
-        <span id="samithi2Count">70,818 chants</span>
-      </div>
-      <div class="samithi">
-        <span><strong id="samithi3Name">Worli Samithi</strong></span>
-        <span id="samithi3Count">4,69,099 chants</span>
-      </div>
-      <p class="count-update-note" id="countUpdateNote">
-        Count would be updated every month 23rd
-      </p>
-      <h3 style="margin-top: 20px" id="totalChantsTitle">
-        🌹 Total: 13,33,288 chants so far!
-      </h3>
-    </div>
+    <h3 id="totalDisplay" style="margin-top: 20px; color: var(--primary-color);">🌹 Total: 0 chants</h3>
+    <p style="font-size: 0.8rem; color: #666;">Counts updated monthly on the 23rd.</p>
   </div>
-  <!-- Satsang -->
-  <div class="section">
-    <h2 id="satsangTitle">🕉️ Monthly Online Satsang</h2>
-    <p id="satsangText">
-      We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri
-      chanting and bhajans.
-    </p>
-    <p>
-      <strong id="nextSession">Next Session:</strong> 3rd Sunday of the month
-      6:00 PM IST
-    </p>
-    <p id="linkInfo">
-      The meeting link will be shared via WhatsApp by your Samithi Convener.
-    </p>
+
+  <div id="adminPanel" class="admin-panel">
+    <h3>🛠️ Management Portal</h3>
+    <p>Logged in as: <strong>Coordinator</strong></p>
+    <hr>
+    <h4>Add New Samithi</h4>
+    <input type="text" id="newName" placeholder="Samithi Name (e.g. Mumbai Samithi)">
+    <input type="number" id="newCount" placeholder="Initial Chant Count">
+    <button class="action-btn" onclick="addSamithi()">Add to List</button>
+    
+    <h4 style="margin-top:20px;">Save Changes</h4>
+    <p style="font-size:0.8rem;">After adding/updating, copy the code below and paste it into your <strong>index.html</strong> file in GitHub to save permanently.</p>
+    <textarea id="outputCode" style="width:100%; height:100px; font-family:monospace; font-size:12px;"></textarea>
   </div>
-  <!-- Photo Gallery -->
+
   <div class="section">
     <h2 id="galleryTitle">📸 Project Glimpses</h2>
-    <p id="galleryText">Memories and moments from our collective chanting offerings:</p>
     <div class="gallery">
-      <img src="photo1.jpg" alt="Chanting Book" onclick="showModal(this.src, this.alt)" />
-      <img src="photo2.jpg" alt="Chanting Count" onclick="showModal(this.src, this.alt)" />
-      <img src="photo3.jpg" alt="Walkeswar Samithi" onclick="showModal(this.src, this.alt)" />
-      <img src="photo4.jpg" alt="Kothapeta Samithi" onclick="showModal(this.src, this.alt)" />
-      <img src="photo5.jpg" alt="Worli Samithi" onclick="showModal(this.src, this.alt)" />
-      <!-- Add more images as needed -->
+      <img src="photo1.jpg" alt="Moment 1">
+      <img src="photo2.jpg" alt="Moment 2">
+      <img src="photo3.jpg" alt="Moment 3">
     </div>
   </div>
-  <!-- Modal for viewing enlarged photo -->
-  <div class="modal" id="galleryModal" onclick="closeModal(event)">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal(event)" aria-label="Close">&times;</button>
-      <img id="modalImg" src="" alt="" />
-    </div>
-  </div>
-  <!-- Contact -->
-  <div class="section contact">
+
+  <div class="section">
     <h2 id="contactTitle">📞 Contact Us</h2>
-    <p id="contactText">If you would like to contribute or know more:</p>
-    <a href="mailto:chantconnect@gmail.com">✉️ Email: chantconnect@gmail.com</a>
-    <a href="https://chantconnect.com">🌐 Website: chantconnect.com</a>
+    <p>Email: <a href="mailto:chantconnect@gmail.com">chantconnect@gmail.com</a></p>
   </div>
-  <!-- Footer -->
+
   <footer>
-    &copy; 2025-2026 ChantConnect.com | All Rights Reserved
-    <div style="margin-top:10px; font-size:0.95rem; color:#888;">
-      <em>Disclaimer: This project is for spiritual inspiration only and has no commercial intent. All audio and images used are for devotional purposes. Please contact organizers for clarifications.</em>
-    </div>
+    &copy; 2025-2026 ChantConnect.com | 
+    <button class="btn-admin" onclick="login()">🔒 Admin Login</button>
   </footer>
+
   <script>
-    // Dark Mode Toggle
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-    }
-    function showModal(imgSrc, imgAlt){
-      document.getElementById("modalImg").src = imgSrc;
-      document.getElementById("modalImg").alt = imgAlt;
-      document.getElementById("galleryModal").classList.add("active");
-    }
-    function closeModal(e) {
-      // Only close if click is on overlay, button, or modal itself but not image
-      if (e.target.classList.contains("modal") || e.target.classList.contains("modal-close")) {
-        document.getElementById("galleryModal").classList.remove("active");
-        document.getElementById("modalImg").src="";
-        document.getElementById("modalImg").alt="";
-      }
-    }
-    // All translations for entire website
+    // --- DATA SECTION: This is what the "Robot" updates ---
+    let projectData = [
+      { name: "Kothapeta Samithi", count: 793371 },
+      { name: "Walkeshwar Samithi", count: 70818 },
+      { name: "Worli Samithi", count: 469099 }
+    ];
+
     const translations = {
-      en: {
-        title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸",
-        tagline: "Offering of One Crore Sai Gayathri Chants",
-        description:
-          "A sacred devotional project lovingly dedicated at the divine lotus feet of Bhagawan Sri Sathya Sai Baba on the auspicious occasion of HIS Centenary Birthday Celebrations.",
-        blessing:
-          "May the collective chants bring peace, love and divine grace to all.",
-        mantraTitle: "🕉️ Sai Gayathri Mantra",
-        lyricsTitle: "📜 Lyrics",
-        lyricsText:
-          "Om Sayeeshwaraya Vidhmahe <br /> Sathya Devaya Dheemahi <br /> Thannah Sarvah Prachodayaat",
-        meaningTitle: "✨ Meaning",
-        meaningText:
-          "“We meditate on Lord Sai, who embodies Truth and Divinity.  May that Supreme Being enlighten our intellect  and guide us along the path of righteousness.”",
-        audioTitle: "🎵 Audio",
-        sheetTitle: "🎼 Music Sheet",
-        dashboardTitle: "🌼 Chanting Dashboard",
-        dashboardText: "Tally of chants reported by Samithis:",
-        samithi1Name: "Kothapeta Samithi",
-        samithi1Count: "7,93,371 chants",
-        samithi2Name: "Walkeshwar Samithi",
-        samithi2Count: "70,818 chants",
-        samithi3Name: "Worli Samithi",
-        samithi3Count: "4,69,099 chants",
-        countUpdateNote: "Count would be updated every month 23rd",
-        totalChantsTitle: "🌹 Total: 13,33,288 chants so far!",
-        satsangTitle: "🕉️ Monthly Online Satsang",
-        satsangText:
-          "We lovingly invite you for a monthly 1-hour online satsang of Sai Gayathri chanting and bhajans.",
-        nextSession: "Next Session:",
-        linkInfo: "The meeting link will be shared via WhatsApp by your Samithi Convener.",
-        galleryTitle: "📸 Project Glimpses",
-        galleryText: "Memories and moments from our collective chanting offerings:",
-        contactTitle: "📞 Contact Us",
-        contactText: "If you would like to contribute or know more:",
-      },
-      te: {
-        title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸",
-        tagline: "కోటి జపాలతో లోక క్షేమానికి కలిసికట్టుగా!",
-        description:
-          "భగవాన్ శ్రీ సత్యసాయి బాబా శతజయంతి ఉత్సవాల సందర్భంలో వారి దివ్య పరిమళవంతమైన పాదాల వద్ద ఈ పవిత్ర గాయత్రీ జపయజ్ఞము ప్రేమతో అర్పిస్తున్నాము.",
-        blessing:
-          "సామూహిక జపం అందరికీ శాంతి, ప్రేమ, దైవానుగ్రహం మరియు దైవసాన్నిధ్యం తీసుకురావాలని ఆకాంక్షిస్తూ ఈ గాయత్రీ పఠనం.",
-        mantraTitle: "🕉️ సాయి గాయత్రి మంత్రం",
-        lyricsTitle: "📜 మంత్రం",
-        lyricsText:
-          "ఓం సాయిశ్వారాయ విద్మహే   <br /> సత్య దేవాయ ధీమహి  <br /> తన్న సర్వః ప్రచోదయాత్ ॥",
-        meaningTitle: "✨ అర్థం",
-        meaningText:
-          "“భగవాన్ శ్రీ సత్యసాయి బాబా సర్వోన్నత దైవ అవతారంగా మనకు తెలుసు, ఈ సత్యదేవుడిని (సత్యం) ధ్యానిస్తాము. సర్వశక్తిమంతుడైన దేవుడు మనల్ని విముక్తికి నడిపించుగాక”",
-        audioTitle: "🎵 ఆడియో",
-        sheetTitle: "🎼 సంగీతం",
-        dashboardTitle: "🌼 జప సంఖ్య",
-        dashboardText: "సమితులు నివేదించిన సంఖ్య:",
-        samithi1Name: "కొత్తపేట సమితి",
-        samithi1Count: "7,93,371 సార్లు",
-        samithi2Name: "వాల్కేశ్వర్ సమితి",
-        samithi2Count: "70,818 సార్లు",
-        samithi3Name: "వర్లి సమితి",
-        samithi3Count: "4,69,099 సార్లు",
-        countUpdateNote: "సంఖ్యని ప్రతి నెల 23వ తేదీన నవీకరిస్తారు",
-        totalChantsTitle: "🌹 మొత్తం: ఇప్పటి వరకు 13,33,288 సార్లు!",
-        satsangTitle: "🕉️ నెలవారీ ఆన్‌లైన్ సత్సంగ్",
-        satsangText:
-          "సాయి గాయత్రి జపం, భజనలు కోసం ప్రతి నెల 1 గంట ఆన్‌లైన్ సత్సంగ్ లో పాల్గొనండి.",
-        nextSession: "తదుపరి సమావేశం:",
-        linkInfo: "మీ సమితి కన్వీనర్ ద్వారా మీటింగ్ లింక్ పంపబడుతుంది.",
-        galleryTitle: "📸 ప్రాజెక్ట్ క్షణాలు",
-        galleryText: "సామూహిక జప యాత్ర నుండి జ్ఞాపకాలు:",
-        contactTitle: "📞 మమ్మల్ని సంప్రదించండి",
-        contactText: "మీరు సహాయం చేయాలనుకుంటే లేదా మరింత తెలుసుకోవాలనుకుంటే:",
-      },
-      hi: {
-        title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸",
-        tagline: "एक करोड़ साई गायत्री जाप का अर्पण",
-        description:
-          "भगवान श्री सत्य साईं बाबा के शताब्दी जन्मोत्सव के शुभ अवसर पर उनके दिव्य चरणों में यह पवित्र भक्ति प्रकल्प प्रेमपूर्वक अर्पित किया गया है।",
-        blessing: "सामूहिक जाप सभी के लिए शांति, प्रेम और दिव्य कृपा लेकर आए।",
-        mantraTitle: "🕉️ साई गायत्री मंत्र",
-        lyricsTitle: "📜 गीत",
-        lyricsText:
-          "ॐ सायेश्वराय विधमहे <br /> सत्यदेवाय धीमहि <br /> तन्न सर्वः प्रचोदयात् ॥",
-        meaningTitle: "✨ अर्थ",
-        meaningText:
-          "“हम भगवान साईं का ध्यान करते हैं, जो सत्य और दिव्यता के प्रतीक हैं। वह परमात्मा हमारे बुद्धि को प्रकाशित करें और हमें धर्म के मार्ग पर चलने का मार्गदर्शन करें।”",
-        audioTitle: "🎵 ऑडियो",
-        sheetTitle: "🎼 संगीत पत्रक",
-        dashboardTitle: "🌼 जाप प्रगति",
-        dashboardText: "समितियों द्वारा रिपोर्ट की गई गिनती:",
-        samithi1Name: "कोठापेटा समिति",
-        samithi1Count: "7,93,371 जाप",
-        samithi2Name: "वॉकश्वर समिति",
-        samithi2Count: "70,818 जाप",
-        samithi3Name: "वर्ली समिति",
-        samithi3Count: "4,69,099 जाप",
-        countUpdateNote: "गिनती हर महीने 23 तारीख को अपडेट की जाएगी",
-        totalChantsTitle: "🌹 कुल: अब तक 13,33,288 जाप!",
-        satsangTitle: "🕉️ मासिक ऑनलाइन सत्संग",
-        satsangText:
-          "हम आपको मासिक 1 घंटे के ऑनलाइन सत्संग में शामिल होने का स्नेहपूर्वक निमंत्रण देते हैं जिसमें साई गायत्री जाप और भजन होंगे।",
-        nextSession: "अगला सत्र:",
-        linkInfo:
-          "आपके समिति संयोजक द्वारा व्हाट्सएप पर बैठक लिंक साझा किया जाएगा।",
-        galleryTitle: "📸 प्रोजेक्ट झलकियाँ",
-        galleryText:
-          "हमारी सामूहिक जाप यात्रा की यादें और पल:",
-        contactTitle: "📞 संपर्क करें",
-        contactText: "यदि आप योगदान करना चाहते हैं या अधिक जानना चाहते हैं:",
-      },
+      en: { title: "🌸 Sai Gayathri Shatalaksha Arpan 🌸", tagline: "Offering of One Crore Sai Gayathri Chants", dashboardTitle: "🌼 Chanting Dashboard" },
+      te: { title: "🌸 కోటి సాయి గాయత్రీ నామ జపము 🌸", tagline: "కోటి జపాలతో లోక క్షేమానికి!", dashboardTitle: "🌼 జప సంఖ్య" },
+      hi: { title: "🌸 साई गायत्री शतलक्ष अर्पण 🌸", tagline: "एक करोड़ साई गायत्री जाप का अर्पण", dashboardTitle: "🌼 जाप प्रगति" }
     };
-    // Function to update all text content based on selected language
-    function updateLanguage(lang) {
-      const t = translations[lang];
-      for (const key in t) {
-        const el = document.getElementById(key);
-        if (el) {
-          el.innerHTML = t[key];
-        }
+
+    function renderDashboard() {
+      const list = document.getElementById('samithiList');
+      let total = 0;
+      list.innerHTML = "";
+      
+      projectData.forEach((item, index) => {
+        total += item.count;
+        list.innerHTML += `
+          <div class="samithi">
+            <span><strong>${item.name}</strong></span>
+            <span>${item.count.toLocaleString()} chants</span>
+          </div>
+        `;
+      });
+      
+      document.getElementById('totalDisplay').innerText = `🌹 Total: ${total.toLocaleString()} chants so far!`;
+      updateSaveCode();
+    }
+
+    function addSamithi() {
+      const name = document.getElementById('newName').value;
+      const count = parseInt(document.getElementById('newCount').value);
+      if(name && count) {
+        projectData.push({ name: name, count: count });
+        renderDashboard();
+        document.getElementById('newName').value = "";
+        document.getElementById('newCount').value = "";
+      } else {
+        alert("Please enter both name and count");
       }
-      // Update active language styling
-      document.querySelectorAll(".language-option").forEach((elem) => {
-        elem.classList.toggle(elem.dataset.lang === lang, true);
-        elem.classList.toggle(elem.dataset.lang !== lang, false);
-        elem.setAttribute(
-          "aria-current",
-          elem.dataset.lang === lang ? "true" : "false"
-        );
-      });
-      document.querySelectorAll(".language-option").forEach((elem) => {
-        if (elem.dataset.lang === lang) {
-          elem.classList.add("active");
-        } else {
-          elem.classList.remove("active");
-        }
-      });
     }
-    // Language button handler
+
+    function updateSaveCode() {
+      const fullCode = document.documentElement.outerHTML;
+      // We find the projectData array in the code and update it for the user to copy-paste
+      document.getElementById('outputCode').value = "Copy all code from your browser (Ctrl+A) and paste it back to GitHub index.html";
+    }
+
+    function login() {
+      const pass = prompt("Enter Admin Password:");
+      if(pass === "sai100") {
+        document.getElementById('adminPanel').classList.add('active');
+        alert("Access Granted. You can now add Samithis below.");
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+
     function setLanguage(lang) {
-      updateLanguage(lang);
+      document.getElementById('title').innerText = translations[lang].title;
+      document.getElementById('tagline').innerText = translations[lang].tagline;
+      document.getElementById('dashboardTitle').innerText = translations[lang].dashboardTitle;
     }
-    // Initialize default language (English)
-    updateLanguage("en");
+
+    // Initialize
+    renderDashboard();
   </script>
 </body>
 </html>
