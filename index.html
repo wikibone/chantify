@@ -28,9 +28,11 @@
     .dashboard { max-width: 700px; margin: auto; border: 2px solid #ccc; border-radius: 10px; padding: 15px; background: var(--card-background); text-align: left; position: relative;}
     .samithi { display: flex; justify-content: space-between; padding: 10px; background: var(--background-color); margin: 8px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
     .admin-panel { display: none; background: #fffde7; padding: 20px; border: 2px dashed #fbc02d; border-radius: 10px; margin: 20px auto; max-width: 700px; text-align: left; }
-    .admin-panel.active { display: block; }
+    .admin-panel.active { display: block; animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     input, select, .act-btn { padding: 12px; margin: 8px 0; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
     .act-btn { background: var(--primary-color); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .act-btn:hover { opacity: 0.9; transform: scale(1.01); }
     .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; padding: 10px; }
     .gallery img { width: 320px; height: 220px; object-fit: cover; cursor: pointer; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); border: 3px solid #f1f1f1; }
     .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
@@ -46,7 +48,7 @@
 <body id="mainBody">
 
   <header>
-    <button class="toggle-darkmode" onclick="toggleDarkMode()">🌗</button>
+    <button class="toggle-darkmode" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌗</button>
     <nav class="language-selector">
       <span class="language-option active" data-lang="en" onclick="setLanguage('en')">English</span>
       <span class="language-option" data-lang="te" onclick="setLanguage('te')">తెలుగు</span>
@@ -80,17 +82,17 @@
     <h2 id="dashboardTitle">🌼 Live Chanting Dashboard</h2>
     <p id="dashboardText">Tally of chants reported by Samithis (Updating in real-time):</p>
     <div class="dashboard">
-      <div style="text-align: right; font-size: 0.8rem; color: #2ecc71; margin-bottom: 10px;">
+      <div style="text-align: right; font-size: 0.8rem; color: #2ecc71; margin-bottom: 10px; font-weight: bold;">
         <span class="live-dot"></span>Cloud Connected
       </div>
-      <div id="samithiList">Loading live data...</div>
+      <div id="samithiList" style="text-align: center; color: #888;">Fetching live data...</div>
     </div>
-    <h3 id="totalChantsTitle" style="margin-top: 20px; color: var(--primary-color);">🌹 Total: 0 chants so far!</h3>
+    <h3 id="totalChantsTitle" style="margin-top: 20px; color: var(--primary-color); transition: 0.3s;">🌹 Total: 0 chants so far!</h3>
   </div>
 
   <div id="adminPanel" class="admin-panel">
     <h3>🛠️ Cloud Management Portal</h3>
-    <p style="font-size: 0.85rem; color: #d35400;">Changes made here instantly sync to all users globally.</p>
+    <p style="font-size: 0.85rem; color: #d35400;">Numbers entered here are instantly sent to the cloud database.</p>
     
     <label for="samithiSelect">Select Target:</label>
     <select id="samithiSelect" onchange="toggleNewInput()">
@@ -103,7 +105,7 @@
     </div>
 
     <label id="countLabel">Chants to Add (Additive):</label>
-    <input type="number" id="additionalCount" placeholder="0">
+    <input type="number" id="additionalCount" placeholder="Enter number of new chants">
     
     <button class="act-btn" onclick="pushToCloud()" id="cloudBtn">Update Live Database ☁️</button>
   </div>
@@ -118,23 +120,23 @@
   <div class="section">
     <h2 id="galleryTitle">📸 Project Glimpses</h2>
     <div class="gallery">
-      <img src="photo1.jpg" onclick="openModal(this.src)">
-      <img src="photo2.jpg" onclick="openModal(this.src)">
-      <img src="photo3.jpg" onclick="openModal(this.src)">
-      <img src="photo4.jpg" onclick="openModal(this.src)">
-      <img src="photo5.jpg" onclick="openModal(this.src)">
+      <img src="photo1.jpg" alt="Photo 1" onclick="openModal(this.src)">
+      <img src="photo2.jpg" alt="Photo 2" onclick="openModal(this.src)">
+      <img src="photo3.jpg" alt="Photo 3" onclick="openModal(this.src)">
+      <img src="photo4.jpg" alt="Photo 4" onclick="openModal(this.src)">
+      <img src="photo5.jpg" alt="Photo 5" onclick="openModal(this.src)">
     </div>
   </div>
 
   <div class="section contact">
     <h2 id="contactTitle">📞 Contact Us</h2>
     <p id="contactText">If you would like to contribute or know more:</p>
-    <a href="mailto:chantconnect@gmail.com" style="display:block; color:var(--primary-color);">✉️ Email: chantconnect@gmail.com</a>
-    <a href="https://chantconnect.com" style="display:block; color:var(--primary-color); margin-top:10px;">🌐 Website: chantconnect.com</a>
+    <a href="mailto:chantconnect@gmail.com" style="display:block; color:var(--primary-color); text-decoration:none;">✉️ Email: chantconnect@gmail.com</a>
+    <a href="https://chantconnect.com" style="display:block; color:var(--primary-color); margin-top:10px; text-decoration:none;">🌐 Website: chantconnect.com</a>
   </div>
 
   <div id="galleryModal" class="modal" onclick="this.classList.remove('active')">
-    <div class="modal-content"><img id="modalImg" src=""></div>
+    <div class="modal-content"><img id="modalImg" src="" alt="Enlarged view"></div>
   </div>
 
   <footer>
@@ -144,16 +146,17 @@
 
   <script>
     // ==========================================
-    // 🚨 PASTE YOUR FIREBASE CONFIG HERE 🚨
+    // YOUR LIVE FIREBASE CONFIGURATION
     // ==========================================
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyDCjj4W2x1al0VuDb5aa4IFIeSAUKABgdE",
+      authDomain: "chantconnect-ea427.firebaseapp.com",
+      databaseURL: "https://chantconnect-ea427-default-rtdb.firebaseio.com",
+      projectId: "chantconnect-ea427",
+      storageBucket: "chantconnect-ea427.firebasestorage.app",
+      messagingSenderId: "79754745268",
+      appId: "1:79754745268:web:2735b9db3c5dbc23924ee1",
+      measurementId: "G-LN0QJ5HW6B"
     };
     
     // Initialize Google Firebase
@@ -173,11 +176,10 @@
     // ==========================================
     // REAL-TIME CLOUD LISTENER
     // ==========================================
-    // This function automatically runs anytime the database changes anywhere in the world!
     database.ref('samithis').on('value', (snapshot) => {
       const data = snapshot.val();
       
-      // If database is completely empty (first run), let's push your initial data
+      // If database is empty, push initial starting data automatically
       if (!data) {
         database.ref('samithis').set({
           "Kothapeta Samithi": 793371,
@@ -205,7 +207,7 @@
         sortableList.push({ name: name, count: localSamithiData[name] });
       }
       
-      // Sort Data Descending by count
+      // Sort Descending
       sortableList.sort((a, b) => b.count - a.count);
 
       list.innerHTML = "";
@@ -219,8 +221,12 @@
       });
 
       select.value = currentSelection || "NEW";
-      const totalTxt = translations[currentLang].totalChantsTitle.replace("{n}", total.toLocaleString());
-      document.getElementById('totalChantsTitle').innerText = totalTxt;
+      const totalEl = document.getElementById('totalChantsTitle');
+      totalEl.innerText = translations[currentLang].totalChantsTitle.replace("{n}", total.toLocaleString());
+      
+      // Flash effect on total when data updates
+      totalEl.style.transform = "scale(1.05)";
+      setTimeout(() => totalEl.style.transform = "scale(1)", 300);
     }
 
     // ==========================================
@@ -230,7 +236,7 @@
       const select = document.getElementById('samithiSelect');
       const addVal = parseInt(document.getElementById('additionalCount').value);
       
-      if(isNaN(addVal)) return alert("Please enter a valid number of chants.");
+      if(isNaN(addVal) || addVal <= 0) return alert("Please enter a valid number of chants.");
 
       let targetName = "";
 
@@ -245,13 +251,17 @@
       
       const btn = document.getElementById('cloudBtn');
       btn.innerText = "Syncing... ⏳";
+      btn.style.opacity = "0.7";
       
-      // This is an Elite "Transaction" - It reads the current cloud value and adds to it securely
+      // Perform an atomic transaction on Firebase
       const samithiRef = database.ref('samithis/' + targetName);
       
       samithiRef.transaction((currentCount) => {
         return (currentCount || 0) + addVal;
       }, (error, committed, snapshot) => {
+        btn.innerText = "Update Live Database ☁️";
+        btn.style.opacity = "1";
+        
         if (error) {
           alert("Cloud Update Failed: " + error);
         } else if (committed) {
@@ -260,12 +270,11 @@
           toggleNewInput();
           alert("Success! The live website has been updated globally.");
         }
-        btn.innerText = "Update Live Database ☁️";
       });
     }
 
     // ==========================================
-    // HELPERS & UI TOGGLES
+    // UI INTERACTIONS
     // ==========================================
     function toggleNewInput() {
       const isNew = document.getElementById('samithiSelect').value === "NEW";
@@ -280,7 +289,7 @@
         if (document.getElementById(key)) document.getElementById(key).innerText = t[key];
       }
       document.querySelectorAll('.language-option').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
-      renderDashboardUI();
+      renderDashboardUI(); // Re-render to translate the 'Total' text
     }
 
     function toggleDarkMode() { document.body.classList.toggle('dark'); }
